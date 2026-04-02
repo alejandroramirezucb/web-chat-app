@@ -9,6 +9,14 @@ export default defineConfig({
   optimizeDeps: {
     include: ['handlebars'],
   },
+  css: {
+    postcss: './postcss.config.mjs',
+    preprocessorOptions: {
+      scss: {
+        api: 'modern',
+      },
+    },
+  },
   server: {
     port: 5173,
     open: true,
