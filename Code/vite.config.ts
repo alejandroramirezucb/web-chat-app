@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   resolve: {
@@ -24,5 +24,15 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     minify: 'terser',
+  },
+  test: {
+    include: ['tests/**/*.test.ts'],
+    environment: 'node',
+    globals: true,
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'html'],
+      reportsDirectory: './coverage',
+    },
   },
 });
