@@ -1,0 +1,35 @@
+<section class='auth-card auth-card--login'>
+  <h1 class='auth-card__title'>Entrada</h1>
+
+  {{#if error}}<p class='auth-form__error'>{{error}}</p>{{/if}}
+
+  <form class='auth-form' autocomplete='off'>
+    <label class='auth-form__label' for='login'>
+      Login
+      <span class='auth-form__required'>*</span>
+    </label>
+    <input
+      class='auth-form__input'
+      id='login'
+      name='login'
+      type='text'
+      required
+    />
+
+    <label class='auth-form__label' for='password'>
+      Password
+      <span class='auth-form__required'>*</span>
+    </label>
+    <input
+      class='auth-form__input'
+      id='password'
+      name='password'
+      type='password'
+      required
+    />
+
+    <button class='auth-form__submit' type='submit'>Iniciar sesion</button>
+  </form>
+
+  <a class='auth-card__link'>¿No tienes una cuenta?</a>
+</section>

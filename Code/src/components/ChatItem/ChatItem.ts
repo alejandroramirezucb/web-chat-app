@@ -26,7 +26,7 @@ export class ChatItem extends Block {
 
   protected events(): Record<string, EventListener> {
     return {
-      click: (() =>
+      'click': (() =>
         eventBus.emit('chat:select', this.chat.id)) as EventListener,
     };
   }

@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "login": "ivanivanov",
+    "password": "qwerty123",
+    "name": "Ivan",
+    "last_name": "Ivanov",
+    "avatar": "",
+    "phone": "+591 7654321",
+    "email": "ivan@example.com"
+  },
+  {
+    "id": 2,
+    "login": "israel",
+    "password": "abc456",
+    "name": "Israel",
+    "last_name": "Garcia",
+    "avatar": "",
+    "phone": "+591 1234567",
+    "email": "israel@example.com"
+  },
+  {
+    "id": 3,
+    "login": "jorge",
+    "password": "jorge789",
+    "name": "Jorge",
+    "last_name": "Lopez",
+    "avatar": "",
+    "phone": "+591 2345678",
+    "email": "jorge@example.com"
+  },
+  {
+    "id": 4,
+    "login": "jesus",
+    "password": "jesus321",
+    "name": "Jesus",
+    "last_name": "Martinez",
+    "avatar": "",
+    "phone": "+591 3456789",
+    "email": "jesus@example.com"
+  }
+]

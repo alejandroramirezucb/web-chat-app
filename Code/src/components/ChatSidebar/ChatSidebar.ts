@@ -28,10 +28,10 @@ export class ChatSidebar extends Block {
   }
 
   protected onMount() {
-    eventBus.on('search:input', this._onUpdateChatList.bind(this));
+    eventBus.on('search:input', this._onUpdateChatList);
   }
 
-  private _onUpdateChatList(query: unknown) {
+  private _onUpdateChatList = (query: unknown) => {
     const text = String(query).toLowerCase().trim();
 
     const filtered = text
@@ -39,10 +39,10 @@ export class ChatSidebar extends Block {
       : this._chats;
 
     this._chatList.update({ chats: filtered });
-  }
+  };
 
   remove() {
     super.remove();
-    eventBus.off('search:input', this._onUpdateChatList.bind(this));
+    eventBus.off('search:input', this._onUpdateChatList);
   }
 }

@@ -9,6 +9,5 @@ export interface Message {
   image?: string;
 }
 
-export const CURRENT_USER_ID = 1;
 export const messagesByChatId: Record<number, Message[]> =
   messagesJson as Record<number, Message[]>;

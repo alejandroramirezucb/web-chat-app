@@ -19,14 +19,14 @@ export class ChatList extends Block {
 
   protected onMount() {
     this._buildItems();
-    eventBus.on('chat:select', this._onActivateChat.bind(this));
+    eventBus.on('chat:select', this._onActivateChat);
   }
 
-  private _onActivateChat(id: unknown) {
+  private _onActivateChat = (id: unknown) => {
     this._items.forEach((item, itemId) =>
       item.update({ isActive: itemId === id }),
     );
-  }
+  };
 
   update(props: Record<string, unknown>) {
     super.update(props);
@@ -56,6 +56,6 @@ export class ChatList extends Block {
 
   remove() {
     super.remove();
-    eventBus.off('chat:select', this._onActivateChat.bind(this));
+    eventBus.off('chat:select', this._onActivateChat);
   }
 }

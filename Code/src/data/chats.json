@@ -1,6 +1,7 @@
 [
   {
     "id": 1,
+    "userId": 1,
     "name": "Israel",
     "avatar": "",
     "lastMessage": "Imagen",
@@ -10,6 +11,7 @@
   },
   {
     "id": 2,
+    "userId": 1,
     "name": "Jorge",
     "avatar": "",
     "lastMessage": "Sticker",
@@ -19,6 +21,7 @@
   },
   {
     "id": 3,
+    "userId": 1,
     "name": "Jesus",
     "avatar": "",
     "lastMessage": "Feliz semana santa",
@@ -28,6 +31,7 @@
   },
   {
     "id": 4,
+    "userId": 1,
     "name": "Pedro",
     "avatar": "",
     "lastMessage": "Super!",
@@ -37,6 +41,7 @@
   },
   {
     "id": 5,
+    "userId": 1,
     "name": "Fernando",
     "avatar": "",
     "lastMessage": "Holaaa",
@@ -46,11 +51,32 @@
   },
   {
     "id": 6,
+    "userId": 1,
     "name": "Josue",
     "avatar": "",
     "lastMessage": "Hay clases mañana?",
     "lastMessageSender": "them",
     "time": "Lunes",
+    "unreadCount": 0
+  },
+  {
+    "id": 7,
+    "userId": 2,
+    "name": "Ivan",
+    "avatar": "",
+    "lastMessage": "Hola Israel!",
+    "lastMessageSender": "them",
+    "time": "09:30",
+    "unreadCount": 1
+  },
+  {
+    "id": 8,
+    "userId": 2,
+    "name": "Jorge",
+    "avatar": "",
+    "lastMessage": "Todo bien?",
+    "lastMessageSender": "me",
+    "time": "Ayer",
     "unreadCount": 0
   }
 ]

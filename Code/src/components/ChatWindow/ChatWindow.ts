@@ -1,7 +1,8 @@
 import { Block } from '../../core/Block';
 import { eventBus } from '../../core/EventBus';
 import { Chat } from '../../props/Chat';
-import { CURRENT_USER_ID, Message } from '../../props/Message';
+import { CURRENT_USER_ID } from '../../props/User';
+import { Message } from '../../props/Message';
 import { ChatHeader } from '../ChatHeader/ChatHeader';
 import { MessageList } from '../MessageList/MessageList';
 import { MessageInput } from '../MessageInput/MessageInput';
@@ -37,15 +38,23 @@ export class ChatWindow extends Block {
   }
 
   protected onMount() {
-    eventBus.on('message:send', this._onLoadMessage.bind(this));
+    eventBus.on('message:send', this._onLoadMessage);
   }
 
-  private _onLoadMessage(text: unknown) {
+  private _onLoadMessage = (text: unknown) => {
     if (!this.chat) {
       return;
     }
 
-    const newMessage: Message = {
+    const newMessage = this._buildMessage(text);
+
+    this._messageList.update({
+      messages: [...this._messageList.messages, newMessage],
+    });
+  };
+
+  private _buildMessage(text: unknown): Message {
+    return {
       id: Date.now(),
       chatId: this.chat.id,
       senderId: CURRENT_USER_ID,
@@ -55,10 +64,6 @@ export class ChatWindow extends Block {
         minute: '2-digit',
       }),
     };
-
-    this._messageList.update({
-      messages: [...this._messageList.messages, newMessage],
-    });
   }
 
   update(props: Record<string, unknown>) {
@@ -72,6 +77,6 @@ export class ChatWindow extends Block {
 
   remove() {
     super.remove();
-    eventBus.off('message:send', this._onLoadMessage.bind(this));
+    eventBus.off('message:send', this._onLoadMessage);
   }
 }

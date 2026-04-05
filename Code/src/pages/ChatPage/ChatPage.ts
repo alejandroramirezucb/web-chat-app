@@ -1,17 +1,21 @@
 import { Block } from '../../core/Block';
 import { eventBus } from '../../core/EventBus';
-import { Chat, chats } from '../../props/Chat';
+import { Chat, getChatsByUserId } from '../../props/Chat';
 import { messagesByChatId } from '../../props/Message';
 import { ChatSidebar } from '../../components/ChatSidebar/ChatSidebar';
 import { ChatWindow } from '../../components/ChatWindow/ChatWindow';
 import template from './ChatPage.hbs?raw';
 
 export class ChatPage extends Block {
-  private _sidebar = new ChatSidebar({ chats });
-  private _window = new ChatWindow();
+  private _userChats: Chat[];
+  private _sidebar: ChatSidebar;
+  private _window: ChatWindow;
 
-  constructor() {
+  constructor(userId: number) {
     super();
+    this._userChats = getChatsByUserId(userId);
+    this._sidebar = new ChatSidebar({ chats: this._userChats });
+    this._window = new ChatWindow();
   }
 
   protected render() {
@@ -26,11 +30,11 @@ export class ChatPage extends Block {
   }
 
   protected onMount() {
-    eventBus.on('chat:select', this._onChatSelect.bind(this));
+    eventBus.on('chat:select', this._onChatSelect);
   }
 
-  private _onChatSelect(chatId: unknown) {
-    const selected = chats.find((_chat: Chat) => _chat.id === chatId);
+  private _onChatSelect = (chatId: unknown) => {
+    const selected = this._userChats.find((_chat) => _chat.id === chatId);
 
     if (!selected) {
       return;
@@ -40,10 +44,10 @@ export class ChatPage extends Block {
       chat: selected,
       messages: messagesByChatId[chatId as number] ?? [],
     });
-  }
+  };
 
   remove() {
-    eventBus.off('chat:select', this._onChatSelect.bind(this));
     super.remove();
+    eventBus.off('chat:select', this._onChatSelect);
   }
 }
