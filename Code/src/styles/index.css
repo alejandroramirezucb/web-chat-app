@@ -1,14 +1,70 @@
+@import '../pages/LoginPage/LoginPage.css';
+@import '../pages/RegisterPage/RegisterPage.css';
+@import '../pages/ChatPage/ChatPage.css';
+@import '../pages/profile/ProfilePage.css';
+@import '../components/LoginForm/LoginForm.css';
+@import '../components/RegisterForm/RegisterForm.css';
+@import '../components/ChatSidebar/ChatSidebar.css';
+@import '../components/SearchInput/SearchInput.css';
+@import '../components/ChatList/ChatList.css';
+@import '../components/ChatItem/ChatItem.css';
+@import '../components/ChatWindow/ChatWindow.css';
+@import '../components/ChatHeader/ChatHeader.css';
+@import '../components/MessageList/MessageList.css';
+@import '../components/MessageItem/MessageItem.css';
+@import '../components/MessageInput/MessageInput.css';
+@import 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap';
+
 :root {
-  color: #1d1d1f;
-  background-color: #f5f7fa;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --color-bg: #efefef;
+  --color-panel: #fff;
+  --color-panel-muted: #fbfbfb;
+  --color-text: #1e1e1e;
+  --color-muted: #999;
+  --color-line: #eaeaea;
+  --color-primary: #3369f3;
+  --font-family-base:
+    'Inter', 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', sans-serif;
+
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  font-family: var(--font-family-base);
 }
 
 * {
   box-sizing: border-box;
 }
 
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
 body {
   margin: 0;
   min-height: 100vh;
+}
+
+body {
+  color: var(--color-text);
+  background: var(--color-bg);
+  font-family: var(--font-family-base);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-rendering: geometricprecision;
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+@media (width <= 1024px) {
+  #app {
+    width: 100%;
+  }
 }

@@ -1,0 +1,10 @@
+/* stylelint-disable selector-class-pattern */
+.profile-page {
+  width: min(100%, 1280px);
+  min-height: 720px;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  font-family: Inter, sans-serif;
+  color: #1e1e1e;
+}

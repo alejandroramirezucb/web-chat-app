@@ -1,0 +1,16 @@
+/* stylelint-disable selector-class-pattern */
+.register-page {
+  width: min(100%, 1280px);
+  min-height: 720px;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  padding: 32px 16px;
+}
+
+@media (width <= 767px) {
+  .register-page {
+    min-height: 100vh;
+    padding: 20px 12px;
+  }
+}

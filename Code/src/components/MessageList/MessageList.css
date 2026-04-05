@@ -1,0 +1,8 @@
+/* stylelint-disable selector-class-pattern */
+.message-list {
+  padding: 16px 22px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

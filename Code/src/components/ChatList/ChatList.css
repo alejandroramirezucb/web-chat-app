@@ -1,0 +1,12 @@
+/* stylelint-disable selector-class-pattern */
+.chat-list {
+  overflow-y: auto;
+  height: calc(100% - 102px);
+  border-top: 1px solid #eaeaea;
+}
+
+@media (width <= 767px) {
+  .chat-list {
+    height: calc(100% - 96px);
+  }
+}

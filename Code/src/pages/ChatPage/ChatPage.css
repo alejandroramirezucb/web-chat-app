@@ -1,0 +1,28 @@
+/* stylelint-disable selector-class-pattern */
+.chat-page {
+  width: min(100%, 1280px);
+  min-height: 720px;
+  background: #efefef;
+  display: grid;
+  grid-template-columns: 310px 1fr;
+}
+
+@media (width <= 1024px) {
+  .chat-page {
+    width: 100%;
+    min-height: 100vh;
+    grid-template-columns: 280px 1fr;
+  }
+}
+
+@media (width <= 767px) {
+  .chat-page {
+    grid-template-columns: 1fr;
+    grid-template-rows: 42vh 58vh;
+  }
+
+  .chat-page > :first-child,
+  .chat-page > :last-child {
+    min-width: 0;
+  }
+}

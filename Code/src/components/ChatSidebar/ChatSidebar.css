@@ -1,0 +1,40 @@
+/* stylelint-disable selector-class-pattern */
+.chat-sidebar {
+  width: 310px;
+  height: 100%;
+  background: #fbfbfb;
+  border-right: 1px solid #eaeaea;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-sidebar__header {
+  height: 56px;
+  padding: 21px 10px 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.chat-sidebar__profile-link {
+  color: #999;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+}
+
+@media (width <= 1024px) {
+  .chat-sidebar {
+    width: 280px;
+  }
+}
+
+@media (width <= 767px) {
+  .chat-sidebar {
+    width: 100%;
+    border-right: 0;
+    border-bottom: 1px solid #eaeaea;
+  }
+}
