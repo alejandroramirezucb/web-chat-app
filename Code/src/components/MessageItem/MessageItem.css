@@ -48,6 +48,12 @@
   line-height: 1;
 }
 
+.message__status-icon {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+}
+
 .message--own .message__time,
 .message--own .message__status {
   color: #3369f3;

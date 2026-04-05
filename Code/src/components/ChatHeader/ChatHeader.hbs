@@ -1,11 +1,17 @@
-<header class="chat-header">
-  <div class="chat-header__avatar">
+<header class='chat-header'>
+  <div class='chat-header__avatar'>
     {{#if chat.avatar}}
-      <img src="{{chat.avatar}}" alt="{{chat.name}}" />
+      <img src='{{chat.avatar}}' alt='{{chat.name}}' />
     {{else}}
-      <span class="chat-header__avatar-placeholder">{{firstLetter chat.name}}</span>
+      <span class='chat-header__avatar-placeholder'>{{firstLetter
+          chat.name
+        }}</span>
     {{/if}}
   </div>
-  <span class="chat-header__name">{{chat.name}}</span>
-  <button type="button" class="chat-header__menu" aria-label="Opciones">&#8942;</button>
+  <span class='chat-header__name'>{{chat.name}}</span>
+  <button type='button' class='chat-header__menu' aria-label='Opciones'><img
+      src='public/Options.svg'
+      alt='Opciones'
+      class='chat-header__menu-icon'
+    /></button>
 </header>
