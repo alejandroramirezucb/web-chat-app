@@ -1,0 +1,16 @@
+<div class="message {{#if isOwn}}message--own{{else}}message--incoming{{/if}}">
+  {{#if message.text}}
+    <p class="message__text">{{message.text}}</p>
+  {{/if}}
+  {{#if message.image}}
+    <div class="message__image-wrapper">
+      <img class="message__image" src="{{message.image}}" alt="imagen adjunta" />
+    </div>
+  {{/if}}
+  <div class="message__meta">
+    <span class="message__time">{{message.time}}</span>
+    {{#if isOwn}}
+      <span class="message__status">&#10003;&#10003;</span>
+    {{/if}}
+  </div>
+</div>

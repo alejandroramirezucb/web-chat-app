@@ -1,0 +1,21 @@
+<div class="chat-item {{#if isActive}}chat-item--active{{/if}}" data-chat-id="{{chat.id}}">
+  <div class="chat-item__avatar">
+    {{#if chat.avatar}}
+      <img src="{{chat.avatar}}" alt="{{chat.name}}" />
+    {{else}}
+      <span class="chat-item__avatar-placeholder">{{firstLetter chat.name}}</span>
+    {{/if}}
+  </div>
+  <div class="chat-item__info">
+    <span class="chat-item__name">{{chat.name}}</span>
+    <span class="chat-item__preview">
+      {{#if isOwnLastMessage}}Tu: {{/if}}{{chat.lastMessage}}
+    </span>
+  </div>
+  <div class="chat-item__meta">
+    <span class="chat-item__time">{{chat.time}}</span>
+    {{#if chat.unreadCount}}
+      <span class="chat-item__badge">{{chat.unreadCount}}</span>
+    {{/if}}
+  </div>
+</div>

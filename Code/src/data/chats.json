@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "Israel",
+    "avatar": "",
+    "lastMessage": "Imagen",
+    "lastMessageSender": "them",
+    "time": "10:49",
+    "unreadCount": 2
+  },
+  {
+    "id": 2,
+    "name": "Jorge",
+    "avatar": "",
+    "lastMessage": "Sticker",
+    "lastMessageSender": "me",
+    "time": "12:00",
+    "unreadCount": 0
+  },
+  {
+    "id": 3,
+    "name": "Jesus",
+    "avatar": "",
+    "lastMessage": "Feliz semana santa",
+    "lastMessageSender": "them",
+    "time": "15:12",
+    "unreadCount": 4
+  },
+  {
+    "id": 4,
+    "name": "Pedro",
+    "avatar": "",
+    "lastMessage": "Super!",
+    "lastMessageSender": "me",
+    "time": "Viernes",
+    "unreadCount": 0
+  },
+  {
+    "id": 5,
+    "name": "Fernando",
+    "avatar": "",
+    "lastMessage": "Holaaa",
+    "lastMessageSender": "them",
+    "time": "Miercoles",
+    "unreadCount": 0
+  },
+  {
+    "id": 6,
+    "name": "Josue",
+    "avatar": "",
+    "lastMessage": "Hay clases mañana?",
+    "lastMessageSender": "them",
+    "time": "Lunes",
+    "unreadCount": 0
+  }
+]

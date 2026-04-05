@@ -1,0 +1,15 @@
+{{#if chat}}
+  <main class='chat-window'>
+    <div data-child='chatHeader'></div>
+    <div data-child='messageList'></div>
+    <div data-child='messageInput'></div>
+  </main>
+{{else}}
+  <main class='chat-window chat-window--empty'>
+    <div class='chat-window__placeholder'>
+      <div class='chat-window__placeholder-icon'>&#128172;</div>
+      <p class='chat-window__placeholder-text'>Elige un chat para enviar el
+        mensaje</p>
+    </div>
+  </main>
+{{/if}}

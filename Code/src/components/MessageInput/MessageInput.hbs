@@ -1,0 +1,17 @@
+<div class="message-input-wrapper">
+  <form class="message-input" autocomplete="off">
+    <button type="button" class="message-input__attach" aria-label="Adjuntar archivo">
+      &#128206;
+    </button>
+    <input
+      class="message-input__field"
+      type="text"
+      name="message"
+      placeholder="Mensaje"
+      {{#if disabled}}disabled{{/if}}
+    />
+    <button type="submit" class="message-input__send" aria-label="Enviar mensaje">
+      &#10145;
+    </button>
+  </form>
+</div>

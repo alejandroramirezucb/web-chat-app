@@ -1,0 +1,26 @@
+{
+  "4": [
+    {
+      "id": 1,
+      "chatId": 4,
+      "senderId": 2,
+      "text": "Holaa, como estas?",
+      "time": "11:56"
+    },
+    {
+      "id": 2,
+      "chatId": 4,
+      "senderId": 2,
+      "text": "",
+      "time": "11:56",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBBimL26c7pYW_xwWUIurO3IYAEJw25EK8Ng&s"
+    },
+    {
+      "id": 3,
+      "chatId": 4,
+      "senderId": 1,
+      "text": "Super!",
+      "time": "12:00"
+    }
+  ]
+}
