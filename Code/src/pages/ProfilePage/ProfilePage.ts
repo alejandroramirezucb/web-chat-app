@@ -6,6 +6,12 @@ export class ProfilePage extends Block {
     super();
   }
 
+  children(){
+    return {
+      
+    }
+  }
+
   render() {
     return template;
   }

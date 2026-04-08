@@ -47,7 +47,7 @@ export abstract class Block {
 
   protected mountEvents() {
     for (const [key, callback] of Object.entries(this.events())) {
-      const i = key.indexOf(' ');
+      const i = key.indexOf(' '); 
 
       if (i === -1) {
         this.element.addEventListener(key, callback);
