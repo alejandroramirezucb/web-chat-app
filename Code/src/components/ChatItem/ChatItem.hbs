@@ -9,7 +9,7 @@
   <div class="chat-item__info">
     <span class="chat-item__name">{{chat.name}}</span>
     <span class="chat-item__preview">
-      {{#if isOwnLastMessage}}Tu: {{/if}}{{chat.lastMessage}}
+      {{#if isOwnLastMessage}}<span class="chat-item__preview-own">Tu: </span>{{/if}}{{chat.lastMessage}}
     </span>
   </div>
   <div class="chat-item__meta">

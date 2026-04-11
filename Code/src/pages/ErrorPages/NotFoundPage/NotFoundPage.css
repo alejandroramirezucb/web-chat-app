@@ -1,0 +1,4 @@
+/* stylelint-disable selector-class-pattern */
+.error-page--404 .error-card__code {
+  color: #1e1e1e;
+}

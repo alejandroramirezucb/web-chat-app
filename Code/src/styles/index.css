@@ -1,3 +1,4 @@
+/* stylelint-disable selector-class-pattern */
 @import '../pages/LoginPage/LoginPage.css';
 @import '../pages/RegisterPage/RegisterPage.css';
 @import '../pages/ChatPage/ChatPage.css';
@@ -13,6 +14,13 @@
 @import '../components/MessageList/MessageList.css';
 @import '../components/MessageItem/MessageItem.css';
 @import '../components/MessageInput/MessageInput.css';
+@import '../components/ProfileCard/ProfileCard.css';
+@import '../components/ProfileAvatar/ProfileAvatar.css';
+@import '../components/ProfileFields/ProfileFields.css';
+@import '../components/ErrorCard/ErrorCard.css';
+@import '../pages/ErrorPages/ErrorPage.css';
+@import '../pages/ErrorPages/NotFoundPage/NotFoundPage.css';
+@import '../pages/ErrorPages/ServerErrorPage/ServerErrorPage.css';
 @import 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap';
 
 :root {
@@ -59,12 +67,14 @@ body {
 
 #app {
   min-height: 100vh;
+  width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
 }
 
-@media (width <= 1024px) {
-  #app {
-    width: 100%;
-  }
+#app > div {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }

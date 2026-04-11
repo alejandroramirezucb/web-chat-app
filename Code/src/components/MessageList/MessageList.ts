@@ -33,6 +33,13 @@ export class MessageList extends Block {
 
     container.innerHTML = '';
 
+    if (this.messages.length > 0) {
+      const separator = document.createElement('span');
+      separator.className = 'message-list__date';
+      separator.textContent = '19 de Junio';
+      container.appendChild(separator);
+    }
+
     this.messages.forEach((_message) => {
       const message = new MessageItem({
         message: _message,

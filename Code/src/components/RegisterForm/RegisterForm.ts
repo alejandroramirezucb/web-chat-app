@@ -26,6 +26,15 @@ export class RegisterForm extends Block {
 
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
+
+    const password = (formData.get('password') as string ?? '').trim();
+    const passwordRepeat = (formData.get('password_repeat') as string ?? '').trim();
+
+    if (password !== passwordRepeat) {
+      this.update({ error: 'Las contraseñas no coinciden' });
+      return;
+    }
+
     const user = this._buildUser(formData);
 
     addUser(user);

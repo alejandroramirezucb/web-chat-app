@@ -5,13 +5,13 @@
 }
 
 .search-input::before {
-  content: '○';
+  content: '';
   position: absolute;
-  top: 8px;
-  left: calc(50% - 46px);
-  color: #999;
-  font-size: 12px;
-  line-height: 1;
+  top: 9px;
+  left: calc(50% - 52px);
+  width: 15px;
+  height: 15px;
+  background: url('/Search.svg') no-repeat center / contain;
 }
 
 .search-input__field {

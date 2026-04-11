@@ -79,12 +79,14 @@
       <span class='auth-form__required'>*</span>
     </label>
     <input
-      class='auth-form__input' 
+      class='auth-form__input'
       id='password_repeat'
       name='password_repeat'
       type='password'
       required
     />
+
+    {{#if error}}<p class='auth-form__error'>{{error}}</p>{{/if}}
 
     <button class='auth-form__submit' type='submit'>Registrarse</button>
   </form>

@@ -38,5 +38,15 @@
     "avatar": "",
     "phone": "+591 3456789",
     "email": "jesus@example.com"
+  },
+  {
+    "id": 4,
+    "login": "prueba",
+    "password": "123",
+    "name": "prueba",
+    "last_name": "prueba",
+    "avatar": "",
+    "phone": "+591 3456789",
+    "email": "prueba@example.com"
   }
 ]

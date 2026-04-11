@@ -1,8 +1,9 @@
 /* stylelint-disable selector-class-pattern */
 .chat-page {
-  width: min(100%, 1280px);
-  min-height: 720px;
-  background: #efefef;
+  flex: 1;
+  width: 100%;
+  min-height: 100vh;
+  background: #fff;
   display: grid;
   grid-template-columns: 310px 1fr;
 }

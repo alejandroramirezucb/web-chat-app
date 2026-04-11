@@ -1,0 +1,7 @@
+<div class='profile-avatar'>
+  {{#if avatar}}
+    <img class='profile-avatar__img' src='{{avatar}}' alt='{{name}}' />
+  {{else}}
+    <span class='profile-avatar__placeholder'>{{firstLetter name}}</span>
+  {{/if}}
+</div>

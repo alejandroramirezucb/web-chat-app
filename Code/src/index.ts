@@ -4,8 +4,12 @@ import { Block } from './core/Block';
 import { LoginPage } from './pages/LoginPage/LoginPage';
 import { RegisterPage } from './pages/RegisterPage/RegisterPage';
 import { ChatPage } from './pages/ChatPage/ChatPage';
+import { ProfilePage } from './pages/ProfilePage/ProfilePage';
+import { findUserById, setCurrentUserId } from './props/User';
 
 const app = document.getElementById('app');
+
+let currentUserId: number | null = null;
 
 function showPage(page: Block) {
   app.innerHTML = '';
@@ -16,9 +20,27 @@ showPage(new LoginPage());
 
 eventBus.on('nav:register', () => showPage(new RegisterPage()));
 eventBus.on('nav:login', () => showPage(new LoginPage()));
-eventBus.on('user:logged-in', (userId: unknown) =>
-  showPage(new ChatPage(userId as number)),
-);
-eventBus.on('user:registered', (userId: unknown) =>
-  showPage(new ChatPage(userId as number)),
-);
+eventBus.on('user:logged-in', (userId: unknown) => {
+  currentUserId = userId as number;
+  setCurrentUserId(currentUserId);
+  showPage(new ChatPage(currentUserId));
+});
+eventBus.on('user:registered', (userId: unknown) => {
+  currentUserId = userId as number;
+  setCurrentUserId(currentUserId);
+  showPage(new ChatPage(currentUserId));
+});
+eventBus.on('nav:profile', () => {
+  if (currentUserId === null) return;
+  const user = findUserById(currentUserId);
+  if (!user) return;
+  showPage(new ProfilePage(user));
+});
+eventBus.on('nav:chat', () => {
+  if (currentUserId === null) return;
+  showPage(new ChatPage(currentUserId));
+});
+eventBus.on('user:logout', () => {
+  currentUserId = null;
+  showPage(new LoginPage());
+});

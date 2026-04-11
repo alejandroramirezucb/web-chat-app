@@ -5,12 +5,14 @@
   height: 100%;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  background: #efefef;
+  background: #fff;
 }
 
 .chat-window--empty {
   display: grid;
   place-items: center;
+  grid-template-rows: 1fr;
+  min-height: 100%;
 }
 
 .chat-window__placeholder {
@@ -18,6 +20,13 @@
   flex-direction: column;
   align-items: center;
   gap: 18px;
+}
+
+.chat-window__placeholder-icon {
+  width: 63px;
+  height: 61px;
+  display: block;
+  object-fit: contain;
 }
 
 .chat-window__placeholder-text {

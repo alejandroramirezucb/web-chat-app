@@ -62,6 +62,10 @@
   white-space: normal;
 }
 
+.chat-item--active .chat-item__preview-own {
+  color: #3369f3;
+}
+
 .chat-item__meta {
   display: flex;
   flex-direction: column;

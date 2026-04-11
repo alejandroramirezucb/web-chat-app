@@ -2,7 +2,7 @@
 .chat-sidebar {
   width: 310px;
   height: 100%;
-  background: #fbfbfb;
+  background: #fff;
   border-right: 1px solid #eaeaea;
   display: flex;
   flex-direction: column;
@@ -23,6 +23,7 @@
   font-weight: 500;
   line-height: 1;
   cursor: pointer;
+  user-select: none;
 }
 
 @media (width <= 1024px) {

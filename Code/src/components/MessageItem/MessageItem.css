@@ -54,14 +54,14 @@
   display: inline-block;
 }
 
-.message--own .message__time,
-.message--own .message__status {
+.message--own .message__time {
   color: #3369f3;
 }
 
 .message__status {
   font-size: 10px;
   line-height: 1;
+  color: #5fb05b;
 }
 
 @media (width <= 767px) {

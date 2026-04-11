@@ -27,6 +27,13 @@ export class ChatSidebar extends Block {
     };
   }
 
+  protected events(): Record<string, EventListener> {
+    return {
+      'click .chat-sidebar__profile-link': (() =>
+        eventBus.emit('nav:profile')) as EventListener,
+    };
+  }
+
   protected onMount() {
     eventBus.on('search:input', this._onUpdateChatList);
   }

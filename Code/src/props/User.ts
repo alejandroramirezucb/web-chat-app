@@ -30,3 +30,7 @@ export function findUserByCredentials(
     (user) => user.login === login && user.password === password,
   );
 }
+
+export function findUserById(id: number): User | undefined {
+  return users.find((user) => user.id === id);
+}

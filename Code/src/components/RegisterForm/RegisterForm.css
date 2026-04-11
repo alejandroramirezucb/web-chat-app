@@ -27,9 +27,10 @@
 
 .auth-card--register .auth-form__label {
   color: #999;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 500;
   line-height: 1;
+  margin-bottom: 2px;
 }
 
 .auth-card--register .auth-form__required {
@@ -73,10 +74,10 @@
 }
 
 .auth-card--register .auth-form__error {
-  margin: -6px 0 4px;
+  margin: -4px 0 0;
   color: #ff2f2f;
-  font-size: 8px;
-  line-height: 1;
+  font-size: 10px;
+  line-height: 1.2;
 }
 
 @media (width <= 767px) {
