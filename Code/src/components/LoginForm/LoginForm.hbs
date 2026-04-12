@@ -1,34 +1,34 @@
 <section class='auth-card auth-card--login'>
   <h1 class='auth-card__title'>Entrada</h1>
 
-  {{#if error}}<p class='auth-form__error'>{{error}}</p>{{/if}}
-
   <form class='auth-form' autocomplete='off'>
-    <label class='auth-form__label' for='login'>
-      Login
-      <span class='auth-form__required'>*</span>
-    </label>
-    <input
-      class='auth-form__input'
-      id='login'
-      ref='loginInput'
-      name='login'
-      type='text'
-      required
-    />
+    <div class='auth-form__group'>
+      <label class='auth-form__label' for='login'>Login</label>
+      <input
+        class='auth-form__input'
+        id='login'
+        ref='loginInput'
+        name='login'
+        type='text'
+        autocomplete='off'
+      />
+      <span ref='loginError' class='auth-form__field-error'></span>
+    </div>
 
-    <label class='auth-form__label' for='password'>
-      Password
-      <span class='auth-form__required'>*</span>
-    </label>
-    <input
-      class='auth-form__input'
-      id='password'
-      ref='passwordInput'
-      name='password'
-      type='password'
-      required
-    />
+    <div class='auth-form__group'>
+      <label class='auth-form__label' for='password'>Password</label>
+      <input
+        class='auth-form__input'
+        id='password'
+        ref='passwordInput'
+        name='password'
+        type='password'
+        autocomplete='off'
+      />
+      <span ref='passwordError' class='auth-form__field-error'></span>
+    </div>
+
+    <p ref='generalError' class='auth-form__error'></p>
 
     <button class='auth-form__submit' type='submit'>Iniciar sesión</button>
   </form>

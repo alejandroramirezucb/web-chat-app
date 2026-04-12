@@ -3,14 +3,17 @@
     <button type="button" class="message-input__attach" aria-label="Adjuntar archivo">
       <img src="/Clip.svg" alt="Adjuntar" class="message-input__attach-icon" />
     </button>
-    <input
-      ref="messageInput"
-      class="message-input__field"
-      type="text"
-      name="message"
-      placeholder="Mensaje"
-      {{#if disabled}}disabled{{/if}}
-    />
+    <div class="message-input__field-wrap">
+      <input
+        ref="messageInput"
+        class="message-input__field"
+        type="text"
+        name="message"
+        placeholder="Mensaje"
+        {{#if disabled}}disabled{{/if}}
+      />
+      <span ref="messageError" class="auth-form__field-error message-input__error"></span>
+    </div>
     <button type="submit" class="message-input__send" aria-label="Enviar mensaje">
       <img src="/Send-Right.svg" alt="Enviar" class="message-input__send-icon" />
     </button>

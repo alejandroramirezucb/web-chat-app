@@ -1,13 +1,13 @@
 [
   {
     "id": 1,
-    "login": "ivanivanov",
-    "password": "qwerty123",
-    "name": "Ivan",
-    "last_name": "Ivanov",
+    "login": "alejandro",
+    "password": "123",
+    "name": "Alejandro",
+    "last_name": "Ramirez",
     "avatar": "",
     "phone": "+591 7654321",
-    "email": "ivan@example.com"
+    "email": "alejandro@example.com"
   },
   {
     "id": 2,
@@ -38,15 +38,5 @@
     "avatar": "",
     "phone": "+591 3456789",
     "email": "jesus@example.com"
-  },
-  {
-    "id": 4,
-    "login": "prueba",
-    "password": "123",
-    "name": "prueba",
-    "last_name": "prueba",
-    "avatar": "",
-    "phone": "+591 3456789",
-    "email": "prueba@example.com"
   }
 ]

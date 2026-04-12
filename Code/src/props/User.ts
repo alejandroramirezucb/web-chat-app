@@ -23,14 +23,29 @@ export function addUser(user: User) {
 }
 
 export function findUserByCredentials(
-  login: string,
+  identifier: string,
   password: string,
 ): User | undefined {
+  const normalizedIdentifier = identifier.trim().toLowerCase();
+
   return users.find(
-    (user) => user.login === login && user.password === password,
+    (user) =>
+      (user.login.toLowerCase() === normalizedIdentifier ||
+        user.email.toLowerCase() === normalizedIdentifier) &&
+      user.password === password,
   );
 }
 
 export function findUserById(id: number): User | undefined {
   return users.find((user) => user.id === id);
+}
+
+export function findUserByLogin(login: string): User | undefined {
+  const normalizedLogin = login.trim().toLowerCase();
+  return users.find((user) => user.login.toLowerCase() === normalizedLogin);
+}
+
+export function findUserByEmail(email: string): User | undefined {
+  const normalizedEmail = email.trim().toLowerCase();
+  return users.find((user) => user.email.toLowerCase() === normalizedEmail);
 }

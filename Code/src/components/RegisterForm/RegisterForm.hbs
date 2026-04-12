@@ -2,98 +2,98 @@
   <h1 class='auth-card__title'>Registro</h1>
 
   <form class='auth-form' autocomplete='off'>
-    <label class='auth-form__label' for='email'>
-      Correo electronico
-      <span class='auth-form__required'>*</span>
-    </label>
-    <input
-      class='auth-form__input'
-      id='email'
-      ref='emailInput'
-      name='email'
-      type='email'
-      required
-    />
+    <div class='auth-form__group'>
+      <label class='auth-form__label' for='email'>Correo electronico</label>
+      <input
+        class='auth-form__input'
+        id='email'
+        ref='emailInput'
+        name='email'
+        type='email'
+        autocomplete='off'
+      />
+      <span ref='emailError' class='auth-form__field-error'></span>
+    </div>
 
-    <label class='auth-form__label' for='login'>
-      Login
-      <span class='auth-form__required'>*</span>
-    </label>
-    <input
-      class='auth-form__input'
-      id='login'
-      ref='loginInput'
-      name='login'
-      type='text'
-      required
-    />
+    <div class='auth-form__group'>
+      <label class='auth-form__label' for='login'>Login</label>
+      <input
+        class='auth-form__input'
+        id='login'
+        ref='loginInput'
+        name='login'
+        type='text'
+        autocomplete='off'
+      />
+      <span ref='loginError' class='auth-form__field-error'></span>
+    </div>
 
-    <label class='auth-form__label' for='name'>
-      Nombre
-      <span class='auth-form__required'>*</span>
-    </label>
-    <input
-      class='auth-form__input'
-      id='name'
-      ref='nameInput'
-      name='name'
-      type='text'
-      required
-    />
+    <div class='auth-form__group'>
+      <label class='auth-form__label' for='name'>Nombre</label>
+      <input
+        class='auth-form__input'
+        id='name'
+        ref='nameInput'
+        name='name'
+        type='text'
+        autocomplete='off'
+      />
+      <span ref='nameError' class='auth-form__field-error'></span>
+    </div>
 
-    <label class='auth-form__label' for='last_name'>
-      Apellido
-      <span class='auth-form__required'>*</span>
-    </label>
-    <input
-      class='auth-form__input'
-      id='last_name'
-      ref='lastNameInput'
-      name='last_name'
-      type='text'
-      required
-    />
+    <div class='auth-form__group'>
+      <label class='auth-form__label' for='last_name'>Apellido</label>
+      <input
+        class='auth-form__input'
+        id='last_name'
+        ref='lastNameInput'
+        name='last_name'
+        type='text'
+        autocomplete='off'
+      />
+      <span ref='lastNameError' class='auth-form__field-error'></span>
+    </div>
 
-    <label class='auth-form__label' for='phone'>
-      Telefono Celular
-      <span class='auth-form__required'>*</span>
-    </label>
-    <input
-      class='auth-form__input'
-      id='phone'
-      ref='phoneInput'
-      name='phone'
-      type='tel'
-      required
-    />
+    <div class='auth-form__group'>
+      <label class='auth-form__label' for='phone'>Telefono Celular</label>
+      <input
+        class='auth-form__input'
+        id='phone'
+        ref='phoneInput'
+        name='phone'
+        type='tel'
+        autocomplete='off'
+      />
+      <span ref='phoneError' class='auth-form__field-error'></span>
+    </div>
 
-    <label class='auth-form__label' for='password'>
-      Password
-      <span class='auth-form__required'>*</span>
-    </label>
-    <input
-      class='auth-form__input'
-      id='password'
-      ref='passwordInput'
-      name='password'
-      type='password'
-      required
-    />
+    <div class='auth-form__group'>
+      <label class='auth-form__label' for='password'>Password</label>
+      <input
+        class='auth-form__input'
+        id='password'
+        ref='passwordInput'
+        name='password'
+        type='password'
+        autocomplete='off'
+      />
+      <span ref='passwordError' class='auth-form__field-error'></span>
+    </div>
 
-    <label class='auth-form__label' for='password_repeat'>
-      Password (Nuevamente)
-      <span class='auth-form__required'>*</span>
-    </label>
-    <input
-      class='auth-form__input'
-      id='password_repeat'
-      ref='passwordRepeatInput'
-      name='password_repeat'
-      type='password'
-      required
-    />
+    <div class='auth-form__group'>
+      <label class='auth-form__label' for='password_repeat'>Password (Nuevamente)</label>
+      <input
+        class='auth-form__input'
+        id='password_repeat'
+        ref='passwordRepeatInput'
+        name='password_repeat'
+        type='password'
+        autocomplete='off'
+      />
+      <span ref='passwordRepeatError' class='auth-form__field-error'></span>
+    </div>
 
-    {{#if error}}<p class='auth-form__error'>{{error}}</p>{{/if}}
+    <p ref='generalError' class='auth-form__error'></p>
 
     <button class='auth-form__submit' type='submit'>Registrarse</button>
   </form>

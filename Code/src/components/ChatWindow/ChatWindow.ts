@@ -51,7 +51,6 @@ export class ChatWindow extends Block {
     }
 
     const newMessage = this.buildMessage(text, chat);
-
     this.props.messages = [...messages, newMessage];
   };
 

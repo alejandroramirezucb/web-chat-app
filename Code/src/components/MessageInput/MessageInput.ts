@@ -1,35 +1,36 @@
 import { Block } from '../../core/Block';
 import { eventBus } from '../../core/EventBus';
+import { validate, showFieldError } from '../../utils/validation';
 import template from './MessageInput.hbs?raw';
 
 export class MessageInput extends Block {
-  protected render() {
+  protected render(): string {
     return template;
   }
 
   protected events(): Record<string, EventListener> {
     return {
-      'submit form': this.submitMessage,
+      'submit form': this.onSubmit,
     };
   }
 
-  private submitMessage = (event: Event) => {
+  private onSubmit = (event: Event): void => {
     event.preventDefault();
 
-    const ref = this.refs.messageInput;
+    const input = this.refs.messageInput;
+    if (!(input instanceof HTMLInputElement)) return;
 
-    if (!(ref instanceof HTMLInputElement)) {
-      return;
-    }
+    const text = input.value.trim();
+    const err = validate('message', text);
 
-    const input = ref;
+    showFieldError(this.refs.messageError, err);
+    if (err) return;
 
-    if (!input || !input.value.trim()) {
-      return;
-    }
+    console.log('MessageInput submit:', { message: text });
 
-    eventBus.emit('message:send', input.value.trim());
+    eventBus.emit('message:send', text);
     input.value = '';
     input.focus();
+    showFieldError(this.refs.messageError, '');
   };
 }

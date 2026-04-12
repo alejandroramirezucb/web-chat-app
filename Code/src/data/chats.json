@@ -4,7 +4,7 @@
     "userId": 1,
     "name": "Israel",
     "avatar": "",
-    "lastMessage": "Imagen",
+    "lastMessage": "Nos vemos!",
     "lastMessageSender": "them",
     "time": "10:49",
     "unreadCount": 2
@@ -14,7 +14,7 @@
     "userId": 1,
     "name": "Jorge",
     "avatar": "",
-    "lastMessage": "Sticker",
+    "lastMessage": "Dale, gracias!",
     "lastMessageSender": "me",
     "time": "12:00",
     "unreadCount": 0
@@ -32,51 +32,11 @@
   {
     "id": 4,
     "userId": 1,
-    "name": "Pedro",
+    "name": "Jesus",
     "avatar": "",
     "lastMessage": "Super!",
     "lastMessageSender": "me",
-    "time": "Viernes",
-    "unreadCount": 0
-  },
-  {
-    "id": 5,
-    "userId": 1,
-    "name": "Fernando",
-    "avatar": "",
-    "lastMessage": "Holaaa",
-    "lastMessageSender": "them",
-    "time": "Miercoles",
-    "unreadCount": 0
-  },
-  {
-    "id": 6,
-    "userId": 1,
-    "name": "Josue",
-    "avatar": "",
-    "lastMessage": "Hay clases mañana?",
-    "lastMessageSender": "them",
-    "time": "Lunes",
-    "unreadCount": 0
-  },
-  {
-    "id": 7,
-    "userId": 2,
-    "name": "Ivan",
-    "avatar": "",
-    "lastMessage": "Hola Israel!",
-    "lastMessageSender": "them",
-    "time": "09:30",
-    "unreadCount": 1
-  },
-  {
-    "id": 8,
-    "userId": 2,
-    "name": "Jorge",
-    "avatar": "",
-    "lastMessage": "Todo bien?",
-    "lastMessageSender": "me",
-    "time": "Ayer",
+    "time": "11:56",
     "unreadCount": 0
   }
 ]

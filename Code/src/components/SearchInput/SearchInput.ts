@@ -14,12 +14,12 @@ export class SearchInput extends Block {
   }
 
   private onInput = () => {
-    const ref = this.refs.searchInput;
+    const searchInputElement = this.refs.searchInput;
 
-    if (!(ref instanceof HTMLInputElement)) {
+    if (!(searchInputElement instanceof HTMLInputElement)) {
       return;
     }
 
-    eventBus.emit('search:input', ref.value);
+    eventBus.emit('search:input', searchInputElement.value);
   };
 }
