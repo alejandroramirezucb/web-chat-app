@@ -5,9 +5,12 @@ import { ChatItem } from '../ChatItem/ChatItem';
 import template from './ChatList.hbs?raw';
 
 export class ChatList extends Block {
-  declare chats: Chat[];
-  declare activeChatId: number | null;
-  private _items: Map<number, ChatItem> = new Map();
+  declare protected props: {
+    chats: Chat[];
+    activeChatId: number | null;
+  };
+
+  private items: Map<number, ChatItem> = new Map();
 
   constructor({ chats, activeChatId = null }) {
     super({ chats, activeChatId });
@@ -18,44 +21,43 @@ export class ChatList extends Block {
   }
 
   protected onMount() {
-    this._buildItems();
-    eventBus.on('chat:select', this._onActivateChat);
+    this.buildItems();
+    eventBus.on('chat:select', this.onChatSelect);
   }
 
-  private _onActivateChat = (id: unknown) => {
-    this._items.forEach((item, itemId) =>
-      item.update({ isActive: itemId === id }),
-    );
+  private onChatSelect = (id: unknown) => {
+    if (typeof id !== 'number') {
+      return;
+    }
+
+    this.props.activeChatId = id;
+    this.buildItems();
   };
 
-  update(props: Record<string, unknown>) {
-    super.update(props);
-    this._buildItems();
-  }
-
-  private _buildItems() {
+  private buildItems() {
     const container = this.element.querySelector('.chat-list');
+    const { chats, activeChatId } = this.props;
 
     if (!container) {
       return;
     }
 
     container.innerHTML = '';
-    this._items.clear();
+    this.items.clear();
 
-    this.chats.forEach((chat) => {
+    chats.forEach((chat) => {
       const item = new ChatItem({
         chat,
-        isActive: chat.id === this.activeChatId,
+        isActive: chat.id === activeChatId,
       });
 
-      this._items.set(chat.id, item);
+      this.items.set(chat.id, item);
       container.appendChild(item.element);
     });
   }
 
   remove() {
     super.remove();
-    eventBus.off('chat:select', this._onActivateChat);
+    eventBus.off('chat:select', this.onChatSelect);
   }
 }

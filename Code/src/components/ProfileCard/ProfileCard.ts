@@ -6,13 +6,13 @@ import { User } from '../../props/User';
 import template from './ProfileCard.hbs?raw';
 
 export class ProfileCard extends Block {
-  private _avatar: ProfileAvatar;
-  private _fields: ProfileFields;
+  declare protected props: {
+    user: User;
+    name: string;
+  };
 
   constructor(user: User) {
-    super({ name: user.name });
-    this._avatar = new ProfileAvatar({ name: user.name, avatar: user.avatar });
-    this._fields = new ProfileFields(user);
+    super({ user, name: user.name });
   }
 
   protected render() {
@@ -20,16 +20,24 @@ export class ProfileCard extends Block {
   }
 
   protected children() {
+    const { user } = this.props;
+
     return {
-      profileAvatar: this._avatar,
-      profileFields: this._fields,
+      profileAvatar: new ProfileAvatar({
+        name: user.name,
+        avatar: user.avatar,
+      }),
+      profileFields: new ProfileFields(user),
     };
   }
 
   protected events(): Record<string, EventListener> {
     return {
-      'click .profile-card__action--logout': (() =>
-        eventBus.emit('user:logout')) as EventListener,
+      'click .profile-card__action--logout': this.logout,
     };
   }
+
+  private logout = () => {
+    eventBus.emit('user:logout');
+  };
 }

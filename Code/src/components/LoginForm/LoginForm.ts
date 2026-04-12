@@ -4,6 +4,10 @@ import { findUserByCredentials } from '../../props/User';
 import template from './LoginForm.hbs?raw';
 
 export class LoginForm extends Block {
+  declare protected props: {
+    error: string;
+  };
+
   constructor() {
     super({ error: '' });
   }
@@ -14,34 +18,38 @@ export class LoginForm extends Block {
 
   protected events(): Record<string, EventListener> {
     return {
-      'submit .auth-form': ((event: Event) =>
-        this._onSubmit(event)) as EventListener,
-      'click .auth-card__link': (() =>
-        eventBus.emit('nav:register')) as EventListener,
+      'submit .auth-form': this.onSubmit,
+      'click .auth-card__link': this.goRegister,
     };
   }
 
-  private _onSubmit(event: Event) {
+  private goRegister = () => {
+    eventBus.emit('nav:register');
+  };
+
+  private inputValue(name: string) {
+    const ref = this.refs[name];
+
+    if (!(ref instanceof HTMLInputElement)) {
+      return '';
+    }
+
+    return ref.value.trim();
+  }
+
+  private onSubmit = (event: Event) => {
     event.preventDefault();
 
-    const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
-
-    const login = (
-      formData.get('login') as string ?? ''
-    ).trim();
-
-    const password = (
-      formData.get('password') as string ?? ''
-    ).trim();
+    const login = this.inputValue('loginInput');
+    const password = this.inputValue('passwordInput');
 
     const user = findUserByCredentials(login, password);
 
     if (!user) {
-      this.update({ error: 'Login o contraseña incorrectos' });
+      this.props.error = 'Login o contraseña incorrectos';
       return;
     }
 
     eventBus.emit('user:logged-in', user.id);
-  }
+  };
 }

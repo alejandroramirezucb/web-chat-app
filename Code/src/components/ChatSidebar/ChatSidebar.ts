@@ -6,14 +6,13 @@ import { ChatList } from '../ChatList/ChatList';
 import template from './ChatSidebar.hbs?raw';
 
 export class ChatSidebar extends Block {
-  private _search = new SearchInput();
-  private _chatList: ChatList;
-  private _chats: Chat[];
+  declare protected props: {
+    chats: Chat[];
+    allChats: Chat[];
+  };
 
-  constructor({ chats }) {
-    super({ chats });
-    this._chats = chats;
-    this._chatList = new ChatList({ chats });
+  constructor({ chats }: { chats: Chat[] }) {
+    super({ chats, allChats: chats });
   }
 
   protected render() {
@@ -22,34 +21,38 @@ export class ChatSidebar extends Block {
 
   protected children(): Record<string, Block> {
     return {
-      searchInput: this._search,
-      chatList: this._chatList,
+      searchInput: new SearchInput(),
+      chatList: new ChatList({ chats: this.props.chats }),
     };
   }
 
   protected events(): Record<string, EventListener> {
     return {
-      'click .chat-sidebar__profile-link': (() =>
-        eventBus.emit('nav:profile')) as EventListener,
+      'click .chat-sidebar__profile-link': this.goProfile,
     };
   }
 
+  private goProfile = () => {
+    eventBus.emit('nav:profile');
+  };
+
   protected onMount() {
-    eventBus.on('search:input', this._onUpdateChatList);
+    eventBus.on('search:input', this.onSearchInput);
   }
 
-  private _onUpdateChatList = (query: unknown) => {
+  private onSearchInput = (query: unknown) => {
     const text = String(query).toLowerCase().trim();
+    const allChats = this.props.allChats;
 
     const filtered = text
-      ? this._chats.filter((_chat) => _chat.name.toLowerCase().includes(text))
-      : this._chats;
+      ? allChats.filter((_chat) => _chat.name.toLowerCase().includes(text))
+      : allChats;
 
-    this._chatList.update({ chats: filtered });
+    this.props.chats = filtered;
   };
 
   remove() {
     super.remove();
-    eventBus.off('search:input', this._onUpdateChatList);
+    eventBus.off('search:input', this.onSearchInput);
   }
 }

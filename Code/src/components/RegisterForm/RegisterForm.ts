@@ -4,6 +4,10 @@ import { User, addUser } from '../../props/User';
 import template from './RegisterForm.hbs?raw';
 
 export class RegisterForm extends Block {
+  declare protected props: {
+    error: string;
+  };
+
   constructor() {
     super({ error: '' });
   }
@@ -14,43 +18,62 @@ export class RegisterForm extends Block {
 
   protected events(): Record<string, EventListener> {
     return {
-      'submit .auth-form': ((event: Event) =>
-        this._onSubmitForm(event)) as EventListener,
-      'click .auth-card__link': (() =>
-        eventBus.emit('nav:login')) as EventListener,
+      'submit .auth-form': this.onSubmitForm,
+      'click .auth-card__link': this.goLogin,
     };
   }
 
-  private _onSubmitForm(event: Event) {
+  private goLogin = () => {
+    eventBus.emit('nav:login');
+  };
+
+  private inputValue(name: string) {
+    const ref = this.refs[name];
+
+    if (!(ref instanceof HTMLInputElement)) {
+      return '';
+    }
+
+    return ref.value.trim();
+  }
+
+  private rawInputValue(name: string) {
+    const ref = this.refs[name];
+
+    if (!(ref instanceof HTMLInputElement)) {
+      return '';
+    }
+
+    return ref.value;
+  }
+
+  private onSubmitForm = (event: Event) => {
     event.preventDefault();
 
-    const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
-
-    const password = (formData.get('password') as string ?? '').trim();
-    const passwordRepeat = (formData.get('password_repeat') as string ?? '').trim();
+    const password = this.inputValue('passwordInput');
+    const passwordRepeat = this.inputValue('passwordRepeatInput');
 
     if (password !== passwordRepeat) {
-      this.update({ error: 'Las contraseñas no coinciden' });
+      this.props.error = 'Las contraseñas no coinciden';
       return;
     }
 
-    const user = this._buildUser(formData);
+    const user = this.buildUser();
 
     addUser(user);
     eventBus.emit('user:registered', user.id);
-  }
+  };
 
-  private _buildUser(formData: FormData): User {
+  private buildUser(): User {
     return {
       id: Date.now(),
-      login: formData.get('login') as string,
-      password: formData.get('password') as string,
-      name: formData.get('name') as string,
-      last_name: formData.get('last_name') as string,
-      avatar: (formData.get('avatar') as string) ?? '',
-      phone: formData.get('phone') as string,
-      email: formData.get('email') as string,
+      login: this.inputValue('loginInput'),
+      password: this.rawInputValue('passwordInput'),
+      name: this.inputValue('nameInput'),
+      last_name: this.inputValue('lastNameInput'),
+      avatar: '',
+      phone: this.inputValue('phoneInput'),
+      email: this.inputValue('emailInput'),
     };
   }
 }

@@ -4,7 +4,7 @@ import { User } from '../../props/User';
 
 export class ProfileFields extends Block {
   constructor(user: User) {
-    super(user as unknown as Record<string, unknown>);
+    super(user);
   }
 
   protected render() {

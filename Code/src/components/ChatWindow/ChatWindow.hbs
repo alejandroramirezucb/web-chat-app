@@ -1,13 +1,17 @@
 {{#if chat}}
   <main class='chat-window'>
-    <div data-child='chatHeader'></div>
-    <div data-child='messageList'></div>
-    <div data-child='messageInput'></div>
+    <div ref='chatHeader'></div>
+    <div ref='messageList'></div>
+    <div ref='messageInput'></div>
   </main>
 {{else}}
   <main class='chat-window chat-window--empty'>
     <div class='chat-window__placeholder'>
-      <img src='/Chat.svg' alt='Icono de chat' class='chat-window__placeholder-icon' />
+      <img
+        src='/Chat.svg'
+        alt='Icono de chat'
+        class='chat-window__placeholder-icon'
+      />
       <p class='chat-window__placeholder-text'>Elige un chat para enviar el
         mensaje</p>
     </div>

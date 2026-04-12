@@ -9,8 +9,11 @@ Handlebars.registerHelper('firstLetter', (name: string) =>
 );
 
 export class ChatItem extends Block {
-  declare chat: Chat;
-  declare isActive: boolean;
+  declare protected props: {
+    chat: Chat;
+    isActive: boolean;
+    isOwnLastMessage: boolean;
+  };
 
   constructor({ chat, isActive = false }) {
     super({
@@ -26,8 +29,11 @@ export class ChatItem extends Block {
 
   protected events(): Record<string, EventListener> {
     return {
-      'click': (() =>
-        eventBus.emit('chat:select', this.chat.id)) as EventListener,
+      click: this.onClick,
     };
   }
+
+  private onClick = () => {
+    eventBus.emit('chat:select', this.props.chat.id);
+  };
 }

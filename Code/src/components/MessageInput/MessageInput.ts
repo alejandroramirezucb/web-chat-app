@@ -9,16 +9,20 @@ export class MessageInput extends Block {
 
   protected events(): Record<string, EventListener> {
     return {
-      'submit form': this._submitMessage as EventListener,
+      'submit form': this.submitMessage,
     };
   }
 
-  private _submitMessage(event: Event) {
+  private submitMessage = (event: Event) => {
     event.preventDefault();
 
-    const input = (
-      event.target as HTMLFormElement
-    ).querySelector<HTMLInputElement>('input[name=message]');
+    const ref = this.refs.messageInput;
+
+    if (!(ref instanceof HTMLInputElement)) {
+      return;
+    }
+
+    const input = ref;
 
     if (!input || !input.value.trim()) {
       return;
@@ -27,5 +31,5 @@ export class MessageInput extends Block {
     eventBus.emit('message:send', input.value.trim());
     input.value = '';
     input.focus();
-  }
+  };
 }

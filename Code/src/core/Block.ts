@@ -1,87 +1,125 @@
 import Handlebars from 'handlebars';
 
 export abstract class Block {
-  readonly element: HTMLElement = document.createElement('div');
-  protected props: Record<string, unknown> = {};
-  private _events: Array<[string, EventListener]> = [];
-  private _mounted = false;
+  private _element: HTMLElement;
+  protected refs: Record<string, HTMLElement> = {};
+  protected props: any = {};
 
-  constructor(props: Record<string, unknown> = {}) {
-    Object.assign(this.props, props);
-    Object.assign(this, props);
+  constructor(props: any = {}) {
+    this.props = this.makeProps(props);
+    this.mount();
+    this.onMount();
+  }
 
-    queueMicrotask(() => {
-      if (this._mounted) {
-        return;
-      }
+  private makeProps(props: any) {
+    const self = this;
 
-      this.mount();
-      this.onMount();
-      this._mounted = true;
+    return new Proxy(props, {
+      set(target, prop, value) {
+        target[prop] = value;
+
+        if (props !== self.props) {
+          self.mount();
+        }
+
+        return true;
+      },
     });
   }
 
-  mount() {
-    this._clearEvents();
-    this.element.innerHTML = Handlebars.compile(this.render())(this.props);
+  public setProps(newProps: any) {
+    if (!newProps) {
+      return;
+    }
+
+    Object.assign(this.props, newProps);
+  }
+
+  get element() {
+    if (!this._element) {
+      this.mount();
+    }
+
+    return this._element;
+  }
+
+  private mount() {
+    const tempElement = document.createElement('template');
+    tempElement.innerHTML = Handlebars.compile(this.render())(this.props);
+
+    const newElement = tempElement.content.firstElementChild as HTMLElement;
+    const refElements = newElement.querySelectorAll('[ref]');
+
+    refElements.forEach((ref) => {
+      const name = ref.getAttribute('ref');
+      this.refs[name] = ref as HTMLElement;
+      ref.removeAttribute('ref');
+    });
+
+    if (this._element) {
+      this.clearEvents(this._element);
+      this._element.replaceWith(newElement);
+    }
+
+    this._element = newElement;
     this.mountChildren();
     this.mountEvents();
   }
 
-  private _clearEvents() {
-    this._events.forEach(([event, callback]) =>
-      this.element.removeEventListener(event, callback),
-    );
-    this._events = [];
+  protected onMount() {}
+
+  protected children(): Record<string, Block> {
+    return {};
   }
-
-  protected mountChildren() {
-    for (const [name, child] of Object.entries(this.children())) {
-      const _child = this.element.querySelector(`[data-child="${name}"]`);
-
-      if (_child) {
-        _child.replaceWith(child.element);
-      }
-    }
-  }
-
-  protected mountEvents() {
-    for (const [key, callback] of Object.entries(this.events())) {
-      const i = key.indexOf(' '); 
-
-      if (i === -1) {
-        this.element.addEventListener(key, callback);
-        this._events.push([key, callback]);
-      } else {
-        const _element = this.element.querySelector(key.substring(i + 1));
-
-        if (_element) {
-          _element.addEventListener(key.substring(0, i), callback);
-        }
-      }
-    }
-  }
-
-  update(props: Record<string, unknown>) {
-    Object.assign(this.props, props);
-    Object.assign(this, props);
-    this.mount();
-  }
-
-  remove() {
-    this._clearEvents();
-    this.element.remove();
-  }
-
-  protected abstract render(): string;
-
-  protected onMount(): void {}
 
   protected events(): Record<string, EventListener> {
     return {};
   }
 
-  protected children(): Record<string, Block> {
-    return {};
+  remove() {
+    if (!this._element) {
+      return;
+    }
+
+    this.clearEvents(this._element);
+    this._element.remove();
   }
+
+  private mountEvents() {
+    for (const [name, event] of Object.entries(this.events())) {
+      if (name.includes(' ')) {
+        const index = name.indexOf(' ');
+        const query = name.substring(index + 1);
+        const queryElement = this._element.querySelector(query);
+
+        if (!queryElement) {
+          continue;
+        }
+
+        queryElement.addEventListener(name.substring(0, index), event);
+      } else {
+        this._element.addEventListener(name, event);
+      }
+    }
+  }
+
+  private mountChildren() {
+    for (const [name, child] of Object.entries(this.children())) {
+      const refElement = this.refs[name];
+
+      if (!refElement || !child) {
+        continue;
+      }
+
+      refElement.replaceWith(child.element);
+    }
+  }
+
+  private clearEvents(_element) {
+    for (const [name, event] of Object.entries(this.events())) {
+      _element.removeEventListener(name, event);
+    }
+  }
+
+  protected abstract render(): string;
 }

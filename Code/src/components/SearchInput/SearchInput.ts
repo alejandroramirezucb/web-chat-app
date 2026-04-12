@@ -9,11 +9,17 @@ export class SearchInput extends Block {
 
   protected events(): Record<string, EventListener> {
     return {
-      'input input[name=search]': ((event: Event) =>
-        eventBus.emit(
-          'search:input',
-          (event.target as HTMLInputElement).value,
-        )) as EventListener,
+      input: this.onInput,
     };
   }
+
+  private onInput = () => {
+    const ref = this.refs.searchInput;
+
+    if (!(ref instanceof HTMLInputElement)) {
+      return;
+    }
+
+    eventBus.emit('search:input', ref.value);
+  };
 }

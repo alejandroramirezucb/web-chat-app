@@ -5,10 +5,12 @@ import { MessageItem } from '../MessageItem/MessageItem';
 import template from './MessageList.hbs?raw';
 
 export class MessageList extends Block {
-  declare messages: Message[];
+  declare protected props: {
+    messages: Message[];
+  };
 
-  constructor() {
-    super({ messages: [] });
+  constructor({ messages = [] }: { messages?: Message[] } = {}) {
+    super({ messages });
   }
 
   protected render() {
@@ -16,16 +18,12 @@ export class MessageList extends Block {
   }
 
   protected onMount() {
-    this._paint();
+    this.paint();
   }
 
-  update(props: Record<string, unknown>) {
-    super.update(props);
-    this._paint();
-  }
-
-  private _paint() {
+  private paint() {
     const container = this.element.querySelector('.message-list');
+    const { messages } = this.props;
 
     if (!container) {
       return;
@@ -33,14 +31,14 @@ export class MessageList extends Block {
 
     container.innerHTML = '';
 
-    if (this.messages.length > 0) {
+    if (messages.length > 0) {
       const separator = document.createElement('span');
       separator.className = 'message-list__date';
       separator.textContent = '19 de Junio';
       container.appendChild(separator);
     }
 
-    this.messages.forEach((_message) => {
+    messages.forEach((_message) => {
       const message = new MessageItem({
         message: _message,
         isOwn: _message.senderId === CURRENT_USER_ID,

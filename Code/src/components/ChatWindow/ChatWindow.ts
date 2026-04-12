@@ -9,16 +9,16 @@ import { MessageInput } from '../MessageInput/MessageInput';
 import template from './ChatWindow.hbs?raw';
 
 export class ChatWindow extends Block {
-  declare chat: Chat | null;
-  declare messages: Message[];
-  private _header: ChatHeader;
-  private _messageList: MessageList;
-  private _messageInput = new MessageInput();
+  declare protected props: {
+    chat: Chat | null;
+    messages: Message[];
+  };
 
-  constructor() {
-    super({ chat: null, messages: [] });
-    this._header = new ChatHeader({ chat: null });
-    this._messageList = new MessageList();
+  constructor({
+    chat = null,
+    messages = [],
+  }: { chat?: Chat | null; messages?: Message[] } = {}) {
+    super({ chat, messages });
   }
 
   protected render() {
@@ -26,37 +26,39 @@ export class ChatWindow extends Block {
   }
 
   protected children(): Record<string, Block> {
-    if (!this.chat) {
+    const { chat, messages } = this.props;
+
+    if (!chat) {
       return {};
     }
 
     return {
-      chatHeader: this._header,
-      messageList: this._messageList,
-      messageInput: this._messageInput,
+      chatHeader: new ChatHeader({ chat }),
+      messageList: new MessageList({ messages }),
+      messageInput: new MessageInput(),
     };
   }
 
   protected onMount() {
-    eventBus.on('message:send', this._onLoadMessage);
+    eventBus.on('message:send', this.onMessageSend);
   }
 
-  private _onLoadMessage = (text: unknown) => {
-    if (!this.chat) {
+  private onMessageSend = (text: unknown) => {
+    const { chat, messages } = this.props;
+
+    if (!chat || !String(text).trim()) {
       return;
     }
 
-    const newMessage = this._buildMessage(text);
+    const newMessage = this.buildMessage(text, chat);
 
-    this._messageList.update({
-      messages: [...this._messageList.messages, newMessage],
-    });
+    this.props.messages = [...messages, newMessage];
   };
 
-  private _buildMessage(text: unknown): Message {
+  private buildMessage(text: unknown, chat: Chat): Message {
     return {
       id: Date.now(),
-      chatId: this.chat.id,
+      chatId: chat.id,
       senderId: CURRENT_USER_ID,
       text: String(text),
       time: new Date().toLocaleTimeString('es-BO', {
@@ -66,17 +68,8 @@ export class ChatWindow extends Block {
     };
   }
 
-  update(props: Record<string, unknown>) {
-    super.update(props);
-
-    if (this.chat) {
-      this._header.update({ chat: this.chat });
-      this._messageList.update({ messages: this.messages });
-    }
-  }
-
   remove() {
     super.remove();
-    eventBus.off('message:send', this._onLoadMessage);
+    eventBus.off('message:send', this.onMessageSend);
   }
 }
