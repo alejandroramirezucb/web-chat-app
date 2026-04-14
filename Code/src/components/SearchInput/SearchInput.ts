@@ -3,7 +3,13 @@ import { eventBus } from '../../core/EventBus';
 import template from './SearchInput.hbs?raw';
 
 export class SearchInput extends Block {
-  declare protected props: Record<string, never>;
+  declare protected props: {
+    value: string;
+  };
+
+  constructor(props: { value?: string } = {}) {
+    super({ value: props.value ?? '' });
+  }
 
   protected render() {
     return template;
@@ -13,6 +19,22 @@ export class SearchInput extends Block {
     return {
       input: this.onInput,
     };
+  }
+
+  protected onMount(): void {
+    const input = this.refs.searchInput;
+
+    if (input instanceof HTMLInputElement) {
+      input.value = this.props.value;
+    }
+  }
+
+  protected onRender(): void {
+    const input = this.refs.searchInput;
+
+    if (input instanceof HTMLInputElement && input.value !== this.props.value) {
+      input.value = this.props.value;
+    }
   }
 
   private onInput = (): void => {

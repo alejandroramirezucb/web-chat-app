@@ -6,6 +6,10 @@ import template from './LoginForm.hbs?raw';
 
 export class LoginForm extends AuthForm {
   declare protected props: Record<string, never>;
+  declare protected refs: Record<string, HTMLElement> & {
+    submitButton?: HTMLElement;
+    registerLinkButton?: HTMLElement;
+  };
 
   constructor() {
     super({});
@@ -19,9 +23,18 @@ export class LoginForm extends AuthForm {
     return {
       'blur #login': this.onLoginBlur,
       'blur #password': this.onPasswordBlur,
-      'click .auth-form__submit': this.onSubmitClick,
-      'click .auth-card__link': this.goRegister,
     };
+  }
+
+  protected onMount(): void {
+    this.refs.submitButton?.addEventListener('click', this.onSubmitClick);
+    this.refs.registerLinkButton?.addEventListener('click', this.goRegister);
+  }
+
+  remove(): void {
+    this.refs.submitButton?.removeEventListener('click', this.onSubmitClick);
+    this.refs.registerLinkButton?.removeEventListener('click', this.goRegister);
+    super.remove();
   }
 
   private onSubmitClick = (event: Event): void => {
@@ -56,7 +69,9 @@ export class LoginForm extends AuthForm {
     showFieldError(this.refs.loginError, loginErr);
     showFieldError(this.refs.passwordError, passwordErr);
 
-    if (loginErr || passwordErr) return;
+    if (loginErr || passwordErr) {
+      return;
+    }
 
     const user = findUserByCredentials(loginOrEmail, password);
 

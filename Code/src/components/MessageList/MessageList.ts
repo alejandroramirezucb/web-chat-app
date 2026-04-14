@@ -19,12 +19,12 @@ export class MessageList extends Block {
     return template;
   }
 
-  protected onMount() {
+  protected onRender() {
     this.paint();
   }
 
   private paint() {
-    const container = this.element.querySelector('.message-list');
+    const container = this.element;
     const { messages } = this.props;
 
     if (!container) {

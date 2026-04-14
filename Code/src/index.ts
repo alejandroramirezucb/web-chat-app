@@ -14,20 +14,23 @@ let currentUserId: number | null = null;
 let currentPage: Block | null = null;
 
 function showPage(page: Block): void {
-  if (!app) return;
+  if (!app) {
+    return;
+  }
+
   currentPage?.remove();
   app.innerHTML = '';
   app.appendChild(page.element);
   currentPage = page;
 }
 
-showPage(new LoginPage());
-
 eventBus.on('nav:register', () => showPage(new RegisterPage()));
 eventBus.on('nav:login', () => showPage(new LoginPage()));
 
 eventBus.on('user:logged-in', (userId: unknown) => {
-  if (typeof userId !== 'number') return;
+  if (typeof userId !== 'number') {
+    return;
+  }
 
   currentUserId = userId;
   setCurrentUserId(currentUserId);
@@ -35,7 +38,9 @@ eventBus.on('user:logged-in', (userId: unknown) => {
 });
 
 eventBus.on('user:registered', (userId: unknown) => {
-  if (typeof userId !== 'number') return;
+  if (typeof userId !== 'number') {
+    return;
+  }
 
   currentUserId = userId;
   setCurrentUserId(currentUserId);
@@ -43,17 +48,23 @@ eventBus.on('user:registered', (userId: unknown) => {
 });
 
 eventBus.on('nav:profile', () => {
-  if (currentUserId === null) return;
+  if (currentUserId === null) {
+    return;
+  }
 
   const user = findUserById(currentUserId);
 
-  if (!user) return;
+  if (!user) {
+    return;
+  }
 
   showPage(new ProfilePage(user));
 });
 
 eventBus.on('nav:chat', () => {
-  if (currentUserId === null) return;
+  if (currentUserId === null) {
+    return;
+  }
 
   showPage(new ChatPage(currentUserId));
 });
@@ -65,3 +76,5 @@ eventBus.on('user:logout', () => {
 
 eventBus.on('nav:404', () => showPage(new NotFoundPage()));
 eventBus.on('nav:500', () => showPage(new ServerErrorPage()));
+
+showPage(new LoginPage());

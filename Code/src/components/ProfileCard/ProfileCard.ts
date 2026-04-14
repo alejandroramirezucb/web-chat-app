@@ -6,14 +6,12 @@ import { AvatarModal } from '../AvatarModal/AvatarModal';
 import { User } from '../../props/User';
 import template from './ProfileCard.hbs?raw';
 
-interface ProfileCardProps {
-  user: User;
-  name: string;
-  avatarUrl: string;
-}
-
 export class ProfileCard extends Block {
-  declare protected props: ProfileCardProps;
+  declare protected props: {
+    user: User;
+    name: string;
+    avatarUrl: string;
+  };
 
   private avatarModal: AvatarModal;
 

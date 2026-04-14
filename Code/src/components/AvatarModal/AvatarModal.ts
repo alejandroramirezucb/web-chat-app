@@ -3,12 +3,10 @@ import template from './AvatarModal.hbs?raw';
 
 export type AvatarSelectedCallback = (dataUrl: string) => void;
 
-interface AvatarModalProps {
-  onAvatarSelected: AvatarSelectedCallback;
-}
-
 export class AvatarModal extends Block {
-  declare protected props: AvatarModalProps;
+  declare protected props: {
+    onAvatarSelected: AvatarSelectedCallback;
+  };
 
   constructor(onAvatarSelected: AvatarSelectedCallback) {
     super({ onAvatarSelected });
@@ -30,7 +28,7 @@ export class AvatarModal extends Block {
     this.element.setAttribute('aria-hidden', 'false');
 
     const input = this.refs.fileInput;
-    
+
     if (input instanceof HTMLInputElement) {
       input.value = '';
     }
@@ -55,14 +53,14 @@ export class AvatarModal extends Block {
     }
 
     const reader = new FileReader();
-    
-    reader.onload = (e: ProgressEvent<FileReader>) => {
-      const result = e.target?.result;
-      
+
+    reader.onload = (event: ProgressEvent<FileReader>) => {
+      const result = event.target?.result;
+
       if (typeof result !== 'string') {
         return;
       }
-      
+
       this.props.onAvatarSelected(result);
       this.close();
     };

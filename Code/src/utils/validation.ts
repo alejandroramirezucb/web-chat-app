@@ -55,7 +55,10 @@ export function showFieldError(
   fieldErrorElement: HTMLElement | null,
   errorMessage: string,
 ): void {
-  if (!fieldErrorElement) return;
+  if (!fieldErrorElement) {
+    return;
+  }
+
   fieldErrorElement.textContent = errorMessage;
   fieldErrorElement.classList.toggle(
     'field-error--visible',

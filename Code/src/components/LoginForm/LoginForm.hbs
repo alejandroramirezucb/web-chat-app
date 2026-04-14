@@ -1,7 +1,7 @@
 <section class='auth-card auth-card--login'>
   <h1 class='auth-card__title'>Entrada</h1>
 
-  <form class='auth-form' autocomplete='off'>
+  <form class='auth-form' ref='loginFormElement' autocomplete='off'>
     <div class='auth-form__group'>
       <label class='auth-form__label' for='login'>Login</label>
       <input
@@ -30,8 +30,10 @@
 
     <p ref='generalError' class='auth-form__error'></p>
 
-    <button class='auth-form__submit' type='button'>Iniciar sesión</button>
+    <button ref='submitButton' class='auth-form__submit' type='button'>Iniciar
+      sesión</button>
   </form>
 
-  <button class='auth-card__link' type='button'>¿No tienes una cuenta?</button>
+  <button ref='registerLinkButton' class='auth-card__link' type='button'>¿No
+    tienes una cuenta?</button>
 </section>

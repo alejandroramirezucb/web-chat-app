@@ -2,13 +2,12 @@ import Handlebars from 'handlebars';
 
 export abstract class Block {
   private _element: HTMLElement;
+  private _mounted = false;
   protected refs: Record<string, HTMLElement> = {};
   protected props: any = {};
 
   constructor(props: any = {}) {
     this.props = this.makeProps(props);
-    this.mount();
-    this.onMount();
   }
 
   private makeProps(props: any) {
@@ -50,6 +49,8 @@ export abstract class Block {
     const newElement = tempElement.content.firstElementChild as HTMLElement;
     const refElements = newElement.querySelectorAll('[ref]');
 
+    this.refs = {};
+
     refElements.forEach((ref) => {
       const name = ref.getAttribute('ref');
       this.refs[name] = ref as HTMLElement;
@@ -64,9 +65,17 @@ export abstract class Block {
     this._element = newElement;
     this.mountChildren();
     this.mountEvents();
+    this.onRender();
+
+    if (!this._mounted) {
+      this._mounted = true;
+      this.onMount();
+    }
   }
 
   protected onMount() {}
+
+  protected onRender() {}
 
   protected children(): Record<string, Block> {
     return {};

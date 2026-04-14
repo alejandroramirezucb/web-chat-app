@@ -34,8 +34,8 @@
 
 @media (width <= 767px) {
   .chat-sidebar {
-    width: 100%;
-    border-right: 0;
-    border-bottom: 1px solid #eaeaea;
+    width: 220px;
+    border-right: 1px solid #eaeaea;
+    border-bottom: 0;
   }
 }

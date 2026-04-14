@@ -25,7 +25,7 @@ export class ChatList extends Block {
     return template;
   }
 
-  protected onMount() {
+  protected onRender() {
     this.buildItems();
   }
 
@@ -57,6 +57,7 @@ export class ChatList extends Block {
     this.items.forEach((item) => {
       item.remove();
     });
+
     this.items.clear();
     super.remove();
   }

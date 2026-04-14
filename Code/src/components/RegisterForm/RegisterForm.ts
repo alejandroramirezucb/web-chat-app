@@ -19,6 +19,8 @@ interface RegisterFieldRefs {
   passwordError: HTMLElement;
   passwordRepeatError: HTMLElement;
   generalError: HTMLElement;
+  submitButton?: HTMLElement;
+  loginLinkButton?: HTMLElement;
 }
 
 export class RegisterForm extends AuthForm {
@@ -42,9 +44,18 @@ export class RegisterForm extends AuthForm {
       'blur #phone': this.onPhoneBlur,
       'blur #password': this.onPasswordBlur,
       'blur #password_repeat': this.onPasswordRepeatBlur,
-      'click .auth-form__submit': this.onSubmitClick,
-      'click .auth-card__link': this.goLogin,
     };
+  }
+
+  protected onMount(): void {
+    this.refs.submitButton?.addEventListener('click', this.onSubmitClick);
+    this.refs.loginLinkButton?.addEventListener('click', this.goLogin);
+  }
+
+  remove(): void {
+    this.refs.submitButton?.removeEventListener('click', this.onSubmitClick);
+    this.refs.loginLinkButton?.removeEventListener('click', this.goLogin);
+    super.remove();
   }
 
   private onSubmitClick = (event: Event): void => {

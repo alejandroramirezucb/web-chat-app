@@ -18,8 +18,8 @@
 
 @media (width <= 767px) {
   .chat-page {
-    grid-template-columns: 1fr;
-    grid-template-rows: 42vh 58vh;
+    grid-template-columns: 220px 1fr;
+    grid-template-rows: 1fr;
   }
 
   .chat-page > :first-child,

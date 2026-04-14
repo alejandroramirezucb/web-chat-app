@@ -1,17 +1,20 @@
 import { Block } from '../../core/Block';
 import template from './ErrorCard.hbs?raw';
 
-export interface ErrorCardProps {
-  code: string;
-  title: string;
-  message?: string;
-  btnText?: string;
-}
-
 export class ErrorCard extends Block {
-  declare protected props: ErrorCardProps;
+  declare protected props: {
+    code: string;
+    title: string;
+    message?: string;
+    btnText?: string;
+  };
 
-  constructor(props: ErrorCardProps) {
+  constructor(props: {
+    code: string;
+    title: string;
+    message?: string;
+    btnText?: string;
+  }) {
     super(props);
   }
 

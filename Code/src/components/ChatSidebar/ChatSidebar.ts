@@ -10,10 +10,17 @@ export class ChatSidebar extends Block {
     chats: Chat[];
     allChats: Chat[];
     activeChatId: number | null;
+    searchQuery: string;
   };
 
-  constructor({ chats, activeChatId = null }: { chats: Chat[]; activeChatId?: number | null }) {
-    super({ chats, allChats: chats, activeChatId });
+  constructor({
+    chats,
+    activeChatId = null,
+  }: {
+    chats: Chat[];
+    activeChatId?: number | null;
+  }) {
+    super({ chats, allChats: chats, activeChatId, searchQuery: '' });
   }
 
   protected render() {
@@ -22,8 +29,11 @@ export class ChatSidebar extends Block {
 
   protected children(): Record<string, Block> {
     return {
-      searchInput: new SearchInput(),
-      chatList: new ChatList({ chats: this.props.chats, activeChatId: this.props.activeChatId }),
+      searchInput: new SearchInput({ value: this.props.searchQuery }),
+      chatList: new ChatList({
+        chats: this.props.chats,
+        activeChatId: this.props.activeChatId,
+      }),
     };
   }
 
@@ -42,13 +52,15 @@ export class ChatSidebar extends Block {
   }
 
   private onSearchInput = (query: unknown) => {
-    const text = String(query).toLowerCase().trim();
+    const rawText = String(query);
+    const text = rawText.toLowerCase().trim();
     const allChats = this.props.allChats;
 
     const filtered = text
       ? allChats.filter((_chat) => _chat.name.toLowerCase().includes(text))
       : allChats;
 
+    this.props.searchQuery = rawText;
     this.props.chats = filtered;
   };
 

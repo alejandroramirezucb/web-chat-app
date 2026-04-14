@@ -12,9 +12,16 @@ export class MessageInput extends Block {
 
   protected events(): Record<string, EventListener> {
     return {
+      'submit .message-input': this.onFormSubmit,
       'click .message-input__send': this.onSendClick,
     };
   }
+
+  private onFormSubmit = (event: Event): void => {
+    event.preventDefault();
+    event.stopPropagation();
+    this.onSubmit();
+  };
 
   private onSendClick = (event: Event): void => {
     event.preventDefault();
@@ -24,15 +31,19 @@ export class MessageInput extends Block {
 
   private onSubmit = (): void => {
     const input = this.refs.messageInput;
-    if (!(input instanceof HTMLInputElement)) return;
+
+    if (!(input instanceof HTMLInputElement)) {
+      return;
+    }
 
     const text = input.value.trim();
     const err = validate('message', text);
 
     showFieldError(this.refs.messageError, err);
-    if (err) return;
 
-    console.log('MessageInput submit:', { message: text });
+    if (err) {
+      return;
+    }
 
     eventBus.emit('message:send', text);
     input.value = '';
