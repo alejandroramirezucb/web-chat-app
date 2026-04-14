@@ -85,34 +85,53 @@ El servidor estará disponible en `http://localhost:5173`
 ## Estructura de carpetas
 
 ```
-Code/src/
-├── components/
-│   ├── ChatHeader/
-│   ├── ChatItem/
-│   ├── ChatList/
-│   ├── ChatSidebar/
-│   ├── ChatWindow/
-│   ├── MessageInput/
-│   ├── MessageItem/
-│   ├── MessageList/
-│   └── SearchInput/
-├── pages/
-│   └── ChatPage/
-├── core/
-│   ├── Block.ts
-│   └── EventBus.ts
-├── props/
-│   ├── Chat.ts
-│   └── Message.ts
-├── data/
-│   ├── chats.json
-│   └── messages.json
-├── styles/
-└── index.ts
-
-Code/tests/
-├── unit/
-└── integration/
+Code/
+├── handlebars.d.ts
+├── src/
+│   ├── components/
+│   │   ├── AuthForm/
+│   │   ├── AvatarModal/
+│   │   ├── ChatHeader/
+│   │   ├── ChatItem/
+│   │   ├── ChatList/
+│   │   ├── ChatSidebar/
+│   │   ├── ChatWindow/
+│   │   ├── ErrorCard/
+│   │   ├── LoginForm/
+│   │   ├── MessageInput/
+│   │   ├── MessageItem/
+│   │   ├── MessageList/
+│   │   ├── ProfileAvatar/
+│   │   ├── ProfileCard/
+│   │   ├── ProfileFields/
+│   │   ├── RegisterForm/
+│   │   └── SearchInput/
+│   ├── pages/
+│   │   ├── ChatPage/
+│   │   ├── LoginPage/
+│   │   ├── ProfilePage/
+│   │   ├── RegisterPage/
+│   │   └── ErrorPages/
+│   │       ├── NotFoundPage/
+│   │       └── ServerErrorPage/
+│   ├── core/
+│   │   ├── Block.ts
+│   │   └── EventBus.ts
+│   ├── props/
+│   │   ├── Chat.ts
+│   │   ├── Message.ts
+│   │   └── User.ts
+│   ├── data/
+│   │   ├── chats.json
+│   │   ├── messages.json
+│   │   └── users.json
+│   ├── utils/
+│   │   └── validation.ts
+│   ├── styles/
+│   └── index.ts
+└── tests/
+	├── unit/
+	└── integration/
 ```
 
 ---
@@ -126,7 +145,7 @@ Code/tests/
 
 **EventBus**
 
-- Bus de eventos para permitir la comunicacion entre componentes
+- Bus de eventos para permitir la comunicacion entre componentes y la navegacion entre paginas
 
 **Componentes**
 
@@ -143,4 +162,4 @@ Code/tests/
 2. Cada componente renderiza su template Handlebars con props
 3. Los eventos del DOM se registran mediante el método `events()`
 4. Los eventos globales se propagan usando EventBus (on, emit, off)
-5. Las actualizaciones de datos invocan `update()` para re-renderizar
+5. Los cambios en props via setProps() disparan remount/render automaticamente
