@@ -1,7 +1,7 @@
 import { AuthForm } from '../AuthForm/AuthForm';
 import { eventBus } from '../../core/EventBus';
 import { findUserByCredentials } from '../../props/User';
-import { showFieldError } from '../../utils/validation';
+import { validate, showFieldError } from '../../utils/validation';
 import template from './LoginForm.hbs?raw';
 
 export class LoginForm extends AuthForm {
@@ -44,18 +44,16 @@ export class LoginForm extends AuthForm {
   };
 
   private onLoginBlur = (): void => {
-    const loginInputValue = this.inputValue('loginInput');
     showFieldError(
       this.refs.loginError,
-      loginInputValue ? '' : 'El campo es requerido',
+      validate('login', this.inputValue('loginInput')),
     );
   };
 
   private onPasswordBlur = (): void => {
-    const passwordInputValue = this.rawInputValue('passwordInput');
     showFieldError(
       this.refs.passwordError,
-      passwordInputValue ? '' : 'El campo es requerido',
+      validate('password', this.rawInputValue('passwordInput')),
     );
   };
 
@@ -63,8 +61,8 @@ export class LoginForm extends AuthForm {
     const loginOrEmail = this.inputValue('loginInput');
     const password = this.rawInputValue('passwordInput');
 
-    const loginErr = loginOrEmail ? '' : 'El campo es requerido';
-    const passwordErr = password ? '' : 'El campo es requerido';
+    const loginErr = validate('login', loginOrEmail);
+    const passwordErr = validate('password', password);
 
     showFieldError(this.refs.loginError, loginErr);
     showFieldError(this.refs.passwordError, passwordErr);
@@ -72,6 +70,8 @@ export class LoginForm extends AuthForm {
     if (loginErr || passwordErr) {
       return;
     }
+
+    console.log({ login: loginOrEmail, password });
 
     const user = findUserByCredentials(loginOrEmail, password);
 

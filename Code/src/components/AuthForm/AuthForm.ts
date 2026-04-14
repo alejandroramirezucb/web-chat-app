@@ -1,7 +1,6 @@
 import { Block } from '../../core/Block';
 
 export abstract class AuthForm extends Block {
-  declare protected props: Record<string, unknown>;
 
   protected inputValue(refName: string): string {
     const inputElement = this.refs[refName];

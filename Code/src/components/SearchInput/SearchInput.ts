@@ -17,7 +17,7 @@ export class SearchInput extends Block {
 
   protected events(): Record<string, EventListener> {
     return {
-      input: this.onInput,
+      keydown: this.onKeyDown,
     };
   }
 
@@ -37,7 +37,11 @@ export class SearchInput extends Block {
     }
   }
 
-  private onInput = (): void => {
+  private onKeyDown = (event: Event): void => {
+    if (!(event instanceof KeyboardEvent) || event.key !== 'Enter') {
+      return;
+    }
+
     const searchInputElement = this.refs.searchInput;
 
     if (!(searchInputElement instanceof HTMLInputElement)) {

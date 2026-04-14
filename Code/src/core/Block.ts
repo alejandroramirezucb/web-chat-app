@@ -1,20 +1,20 @@
-import Handlebars from 'handlebars';
+import Handlebars from "handlebars";
 
 export abstract class Block {
-  private _element: HTMLElement;
+  private _element!: HTMLElement;
   private _mounted = false;
   protected refs: Record<string, HTMLElement> = {};
-  protected props: any = {};
+  protected props: any;
 
   constructor(props: any = {}) {
-    this.props = this.makeProps(props);
+    this.props = this.makeReactiveProps(props);
   }
 
-  private makeProps(props: any) {
+  private makeReactiveProps(props: any): any {
     const self = this;
 
     return new Proxy(props, {
-      set(target, prop, value) {
+      set(target: Record<string, unknown>, prop: string, value: unknown) {
         target[prop] = value;
 
         if (props !== self.props) {
@@ -26,7 +26,7 @@ export abstract class Block {
     });
   }
 
-  public setProps(newProps: any) {
+  public setProps(newProps: any): void {
     if (!newProps) {
       return;
     }
@@ -34,7 +34,7 @@ export abstract class Block {
     Object.assign(this.props, newProps);
   }
 
-  get element() {
+  get element(): HTMLElement {
     if (!this._element) {
       this.mount();
     }
@@ -42,19 +42,23 @@ export abstract class Block {
     return this._element;
   }
 
-  private mount() {
-    const tempElement = document.createElement('template');
+  private mount(): void {
+    const tempElement = document.createElement("template");
     tempElement.innerHTML = Handlebars.compile(this.render())(this.props);
 
     const newElement = tempElement.content.firstElementChild as HTMLElement;
-    const refElements = newElement.querySelectorAll('[ref]');
+    const refElements = newElement.querySelectorAll("[ref]");
 
     this.refs = {};
 
     refElements.forEach((ref) => {
-      const name = ref.getAttribute('ref');
-      this.refs[name] = ref as HTMLElement;
-      ref.removeAttribute('ref');
+      const name = ref.getAttribute("ref");
+
+      if (name) {
+        this.refs[name] = ref as HTMLElement;
+      }
+
+      ref.removeAttribute("ref");
     });
 
     if (this._element) {
@@ -73,9 +77,9 @@ export abstract class Block {
     }
   }
 
-  protected onMount() {}
+  protected onMount(): void {}
 
-  protected onRender() {}
+  protected onRender(): void {}
 
   protected children(): Record<string, Block> {
     return {};
@@ -85,7 +89,7 @@ export abstract class Block {
     return {};
   }
 
-  remove() {
+  remove(): void {
     if (!this._element) {
       return;
     }
@@ -94,10 +98,10 @@ export abstract class Block {
     this._element.remove();
   }
 
-  private mountEvents() {
+  private mountEvents(): void {
     for (const [name, event] of Object.entries(this.events())) {
-      if (name.includes(' ')) {
-        const index = name.indexOf(' ');
+      if (name.includes(" ")) {
+        const index = name.indexOf(" ");
         const query = name.substring(index + 1);
         const queryElement = this._element.querySelector(query);
 
@@ -112,7 +116,7 @@ export abstract class Block {
     }
   }
 
-  private mountChildren() {
+  private mountChildren(): void {
     for (const [name, child] of Object.entries(this.children())) {
       const refElement = this.refs[name];
 
@@ -124,12 +128,12 @@ export abstract class Block {
     }
   }
 
-  private clearEvents(_element: HTMLElement) {
+  private clearEvents(element: HTMLElement): void {
     for (const [name, event] of Object.entries(this.events())) {
-      if (name.includes(' ')) {
-        const index = name.indexOf(' ');
+      if (name.includes(" ")) {
+        const index = name.indexOf(" ");
         const query = name.substring(index + 1);
-        const queryElement = _element.querySelector(query);
+        const queryElement = element.querySelector(query);
 
         if (!queryElement) {
           continue;
@@ -137,7 +141,7 @@ export abstract class Block {
 
         queryElement.removeEventListener(name.substring(0, index), event);
       } else {
-        _element.removeEventListener(name, event);
+        element.removeEventListener(name, event);
       }
     }
   }

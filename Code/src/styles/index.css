@@ -15,6 +15,7 @@
 @import '../components/MessageItem/MessageItem.css';
 @import '../components/MessageInput/MessageInput.css';
 @import '../components/ProfileCard/ProfileCard.css';
+@import '../components/ProfileEditForm/ProfileEditForm.css';
 @import '../components/ProfileAvatar/ProfileAvatar.css';
 @import '../components/ProfileFields/ProfileFields.css';
 @import '../components/ErrorCard/ErrorCard.css';

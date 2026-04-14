@@ -11,7 +11,8 @@
     "test:unit": "vitest run tests/unit",
     "test:integration": "vitest run tests/integration",
     "test:coverage": "vitest run --coverage",
-    "lint": "eslint .",
+    "start": "npm run build && vite preview --port 3000",
+    "lint": "eslint . && stylelint \"**/*.{css,scss}\" --allow-empty-input",
     "lint:fix": "eslint . --fix",
     "lint:styles": "stylelint \"**/*.{css,scss}\" --allow-empty-input",
     "lint:styles:fix": "stylelint \"**/*.{css,scss}\" --fix --allow-empty-input"

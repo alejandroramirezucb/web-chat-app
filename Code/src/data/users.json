@@ -2,7 +2,7 @@
   {
     "id": 1,
     "login": "alejandro",
-    "password": "alejandro123",
+    "password": "Alejandro123",
     "name": "Alejandro",
     "last_name": "Ramirez",
     "avatar": "",
@@ -12,7 +12,7 @@
   {
     "id": 2,
     "login": "israel",
-    "password": "abc456",
+    "password": "Israel456",
     "name": "Israel",
     "last_name": "Garcia",
     "avatar": "",
@@ -22,7 +22,7 @@
   {
     "id": 3,
     "login": "jorge",
-    "password": "jorge789",
+    "password": "Jorge789",
     "name": "Jorge",
     "last_name": "Lopez",
     "avatar": "",
@@ -32,7 +32,7 @@
   {
     "id": 4,
     "login": "jesus",
-    "password": "jesus321",
+    "password": "Jesus321",
     "name": "Jesus",
     "last_name": "Martinez",
     "avatar": "",

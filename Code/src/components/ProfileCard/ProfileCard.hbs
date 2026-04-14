@@ -1,14 +1,18 @@
 <section class='profile-card'>
   <div ref='profileAvatar' class='profile-card__avatar-wrap'></div>
   <p class='profile-card__name'>{{name}}</p>
-  <div ref='profileFields'></div>
-  <div class='profile-card__actions'>
-    <button class='profile-card__action' type='button'>Cambiar datos</button>
-    <button class='profile-card__action' type='button'>Cambiar contrasena</button>
-    <button
-      class='profile-card__action profile-card__action--danger profile-card__action--logout'
-      type='button'
-    >Salir</button>
-  </div>
+  {{#if showEditForm}}
+    <div ref='profileEditForm'></div>
+  {{else}}
+    <div ref='profileFields'></div>
+    <div class='profile-card__actions'>
+      <button class='profile-card__action profile-card__action--edit' type='button'>Cambiar datos</button>
+      <button class='profile-card__action' type='button'>Cambiar contraseña</button>
+      <button
+        class='profile-card__action profile-card__action--danger profile-card__action--logout'
+        type='button'
+      >Salir</button>
+    </div>
+  {{/if}}
   <div ref='avatarModal'></div>
 </section>

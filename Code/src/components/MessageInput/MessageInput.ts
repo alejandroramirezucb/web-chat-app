@@ -14,6 +14,7 @@ export class MessageInput extends Block {
     return {
       'submit .message-input': this.onFormSubmit,
       'click .message-input__send': this.onSendClick,
+      'blur .message-input__field': this.onMessageBlur,
     };
   }
 
@@ -27,6 +28,16 @@ export class MessageInput extends Block {
     event.preventDefault();
     event.stopPropagation();
     this.onSubmit();
+  };
+
+  private onMessageBlur = (): void => {
+    const input = this.refs.messageInput;
+
+    if (!(input instanceof HTMLInputElement)) {
+      return;
+    }
+
+    showFieldError(this.refs.messageError, validate('message', input.value.trim()));
   };
 
   private onSubmit = (): void => {
@@ -45,6 +56,7 @@ export class MessageInput extends Block {
       return;
     }
 
+    console.log({ message: text });
     eventBus.emit('message:send', text);
     input.value = '';
     input.focus();

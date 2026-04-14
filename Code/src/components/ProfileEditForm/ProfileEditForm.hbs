@@ -1,0 +1,73 @@
+<form class='profile-edit-form' autocomplete='off'>
+  <div class='profile-edit-form__group'>
+    <label class='profile-edit-form__label' for='pef-email'>Correo electrónico</label>
+    <input
+      class='profile-edit-form__input'
+      id='pef-email'
+      ref='emailInput'
+      name='email'
+      type='email'
+      autocomplete='off'
+    />
+    <span ref='emailError' class='profile-edit-form__field-error'></span>
+  </div>
+
+  <div class='profile-edit-form__group'>
+    <label class='profile-edit-form__label' for='pef-login'>Login</label>
+    <input
+      class='profile-edit-form__input'
+      id='pef-login'
+      ref='loginInput'
+      name='login'
+      type='text'
+      autocomplete='off'
+    />
+    <span ref='loginError' class='profile-edit-form__field-error'></span>
+  </div>
+
+  <div class='profile-edit-form__group'>
+    <label class='profile-edit-form__label' for='pef-name'>Nombre</label>
+    <input
+      class='profile-edit-form__input'
+      id='pef-name'
+      ref='nameInput'
+      name='first_name'
+      type='text'
+      autocomplete='off'
+    />
+    <span ref='nameError' class='profile-edit-form__field-error'></span>
+  </div>
+
+  <div class='profile-edit-form__group'>
+    <label class='profile-edit-form__label' for='pef-last-name'>Apellido</label>
+    <input
+      class='profile-edit-form__input'
+      id='pef-last-name'
+      ref='lastNameInput'
+      name='second_name'
+      type='text'
+      autocomplete='off'
+    />
+    <span ref='lastNameError' class='profile-edit-form__field-error'></span>
+  </div>
+
+  <div class='profile-edit-form__group'>
+    <label class='profile-edit-form__label' for='pef-phone'>Teléfono</label>
+    <input
+      class='profile-edit-form__input'
+      id='pef-phone'
+      ref='phoneInput'
+      name='phone'
+      type='tel'
+      autocomplete='off'
+    />
+    <span ref='phoneError' class='profile-edit-form__field-error'></span>
+  </div>
+
+  <p ref='generalError' class='profile-edit-form__error'></p>
+
+  <div class='profile-edit-form__actions'>
+    <button ref='saveButton' class='profile-edit-form__save' type='button'>Guardar</button>
+    <button ref='cancelButton' class='profile-edit-form__cancel' type='button'>Cancelar</button>
+  </div>
+</form>

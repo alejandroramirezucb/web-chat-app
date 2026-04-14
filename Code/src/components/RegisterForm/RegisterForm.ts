@@ -164,6 +164,16 @@ export class RegisterForm extends AuthForm {
 
     const user = this.buildUser();
     addUser(user);
+
+    console.log({
+      email,
+      login,
+      name,
+      last_name: lastName,
+      phone,
+      password,
+    });
+
     eventBus.emit('user:registered', user.id);
   };
 
