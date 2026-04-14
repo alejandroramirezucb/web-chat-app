@@ -6,11 +6,11 @@ Single Page Application de mensajería que implementa renderizado por plantillas
 
 ## Enlaces importantes
 
-| Recurso | Estado                                                   |
-| ------- | -------------------------------------------------------- |
-| Netlify | Pendiente                                                |
-| Figma   | [Ver proyecto](https://acortar.link/fRM6nS)              |
-| Gemini  | [IA usada](https://gemini.google.com/share/85349714c0d2) |
+| Recurso | Estado                                                                                   |
+| ------- | ---------------------------------------------------------------------------------------- |
+| Netlify | [Ver despliegue](https://69de88ed94bd666b31b6c599--inspiring-sawine-bf89a0.netlify.app/) |
+| Figma   | [Ver proyecto](https://acortar.link/fRM6nS)                                              |
+| Gemini  | [IA usada](https://gemini.google.com/share/85349714c0d2)                                 |
 
 ---
 
