@@ -11,11 +11,14 @@ import { findUserById, setCurrentUserId } from './props/User';
 
 const app = document.getElementById('app');
 let currentUserId: number | null = null;
+let currentPage: Block | null = null;
 
 function showPage(page: Block): void {
   if (!app) return;
+  currentPage?.remove();
   app.innerHTML = '';
   app.appendChild(page.element);
+  currentPage = page;
 }
 
 showPage(new LoginPage());
@@ -25,6 +28,7 @@ eventBus.on('nav:login', () => showPage(new LoginPage()));
 
 eventBus.on('user:logged-in', (userId: unknown) => {
   if (typeof userId !== 'number') return;
+
   currentUserId = userId;
   setCurrentUserId(currentUserId);
   showPage(new ChatPage(currentUserId));
@@ -32,6 +36,7 @@ eventBus.on('user:logged-in', (userId: unknown) => {
 
 eventBus.on('user:registered', (userId: unknown) => {
   if (typeof userId !== 'number') return;
+
   currentUserId = userId;
   setCurrentUserId(currentUserId);
   showPage(new ChatPage(currentUserId));
@@ -39,13 +44,17 @@ eventBus.on('user:registered', (userId: unknown) => {
 
 eventBus.on('nav:profile', () => {
   if (currentUserId === null) return;
+
   const user = findUserById(currentUserId);
+
   if (!user) return;
+
   showPage(new ProfilePage(user));
 });
 
 eventBus.on('nav:chat', () => {
   if (currentUserId === null) return;
+
   showPage(new ChatPage(currentUserId));
 });
 

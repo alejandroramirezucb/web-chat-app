@@ -12,8 +12,7 @@ export class ServerErrorPage extends Block {
     return {
       errorCard: new ErrorCard({
         code: '500',
-        title: 'Error del servidor',
-        message: 'Algo salió mal. Inténtalo de nuevo más tarde.',
+        title: 'Ya lo estamos solucionando',
       }),
     };
   }

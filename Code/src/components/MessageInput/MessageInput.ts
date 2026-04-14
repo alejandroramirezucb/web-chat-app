@@ -10,13 +10,17 @@ export class MessageInput extends Block {
 
   protected events(): Record<string, EventListener> {
     return {
-      'submit form': this.onSubmit,
+      'click .message-input__send': this.onSendClick,
     };
   }
 
-  private onSubmit = (event: Event): void => {
+  private onSendClick = (event: Event): void => {
     event.preventDefault();
+    event.stopPropagation();
+    this.onSubmit();
+  };
 
+  private onSubmit = (): void => {
     const input = this.refs.messageInput;
     if (!(input instanceof HTMLInputElement)) return;
 

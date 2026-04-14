@@ -1,0 +1,90 @@
+/* stylelint-disable selector-class-pattern */
+.avatar-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+}
+
+.avatar-modal--open {
+  display: block;
+}
+
+.avatar-modal__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 50%);
+}
+
+.avatar-modal__card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(90vw, 420px);
+  background: #fff;
+  border-radius: 12px;
+  padding: 40px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  font-family: Inter, sans-serif;
+}
+
+.avatar-modal__title {
+  margin: 0;
+  color: #1e1e1e;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.avatar-modal__drop-zone {
+  width: 100%;
+  min-height: 120px;
+  border: 2px dashed #eaeaea;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-modal__file-label {
+  color: #3369f3;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.avatar-modal__file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.avatar-modal__submit {
+  width: 100%;
+  height: 44px;
+  border: 0;
+  border-radius: 8px;
+  background: #3369f3;
+  color: #fff;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.avatar-modal__submit:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

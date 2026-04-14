@@ -2,6 +2,11 @@ import Handlebars from 'handlebars';
 
 export abstract class Block {
   private _element: HTMLElement;
+  private mountedEvents: Array<{
+    element: Element;
+    eventName: string;
+    handler: EventListener;
+  }> = [];
   protected refs: Record<string, HTMLElement> = {};
   protected props: any = {};
 
@@ -97,39 +102,64 @@ export abstract class Block {
     )) {
       if (eventDescriptor.includes(' ')) {
         const separatorIndex = eventDescriptor.indexOf(' ');
+        const eventName = eventDescriptor.substring(0, separatorIndex);
         const selector = eventDescriptor.substring(separatorIndex + 1);
-        const targetElement = this._element.querySelector(selector);
+        const matchingElements: Element[] = [];
 
-        if (!targetElement) {
+        if (this._element.matches(selector)) {
+          matchingElements.push(this._element);
+        }
+
+        matchingElements.push(
+          ...Array.from(this._element.querySelectorAll(selector)),
+        );
+
+        if (matchingElements.length === 0) {
           continue;
         }
 
-        targetElement.addEventListener(
-          eventDescriptor.substring(0, separatorIndex),
-          eventHandler,
-        );
+        for (const targetElement of matchingElements) {
+          targetElement.addEventListener(eventName, eventHandler);
+          this.mountedEvents.push({
+            element: targetElement,
+            eventName,
+            handler: eventHandler,
+          });
+        }
       } else {
         this._element.addEventListener(eventDescriptor, eventHandler);
+        this.mountedEvents.push({
+          element: this._element,
+          eventName: eventDescriptor,
+          handler: eventHandler,
+        });
       }
     }
   }
 
   private mountChildren() {
-    for (const [refName, childBlock] of Object.entries(this.children())) {
-      const childContainer = this.refs[refName];
+    for (const [name, child] of Object.entries(this.children())) {
+      const childContainer = this.refs[name];
 
-      if (!childContainer || !childBlock) {
+      if (!childContainer || !child) {
         continue;
       }
 
-      childContainer.replaceWith(childBlock.element);
+      childContainer.replaceWith(child.element);
     }
   }
 
   private clearEvents(mountedElement: HTMLElement) {
-    for (const [eventName, eventHandler] of Object.entries(this.events())) {
-      mountedElement.removeEventListener(eventName, eventHandler);
+    for (const { element, eventName, handler } of this.mountedEvents) {
+      if (element === mountedElement || mountedElement.contains(element)) {
+        element.removeEventListener(eventName, handler);
+      }
     }
+
+    this.mountedEvents = this.mountedEvents.filter(
+      ({ element }) =>
+        element !== mountedElement && !mountedElement.contains(element),
+    );
   }
 
   protected abstract render(): string;

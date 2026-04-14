@@ -1,0 +1,19 @@
+<div class="avatar-modal" aria-hidden="true">
+  <div class="avatar-modal__overlay"></div>
+  <div class="avatar-modal__card" role="dialog" aria-labelledby="avatar-modal-title">
+    <h2 class="avatar-modal__title" id="avatar-modal-title">Cargar archivo</h2>
+    <div class="avatar-modal__drop-zone">
+      <label class="avatar-modal__file-label" for="avatar-file-input">
+        Seleccionar archivo<br>en el ordenador
+      </label>
+      <input
+        ref="fileInput"
+        class="avatar-modal__file-input"
+        id="avatar-file-input"
+        type="file"
+        accept="image/*"
+      />
+    </div>
+    <button class="avatar-modal__submit" type="button">Cambiar</button>
+  </div>
+</div>

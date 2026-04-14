@@ -1,4 +1,4 @@
-import { Block } from '../../core/Block';
+import { AuthForm } from '../AuthForm/AuthForm';
 import { eventBus } from '../../core/EventBus';
 import {
   User,
@@ -21,7 +21,7 @@ interface RegisterFieldRefs {
   generalError: HTMLElement;
 }
 
-export class RegisterForm extends Block {
+export class RegisterForm extends AuthForm {
   declare protected refs: Record<string, HTMLElement> & RegisterFieldRefs;
 
   constructor() {
@@ -34,8 +34,6 @@ export class RegisterForm extends Block {
 
   protected events(): Record<string, EventListener> {
     return {
-      'submit .auth-form': this.onSubmit,
-      'click .auth-card__link': this.goLogin,
       'blur #email': this.onEmailBlur,
       'blur #login': this.onLoginBlur,
       'blur #name': this.onNameBlur,
@@ -43,8 +41,16 @@ export class RegisterForm extends Block {
       'blur #phone': this.onPhoneBlur,
       'blur #password': this.onPasswordBlur,
       'blur #password_repeat': this.onPasswordRepeatBlur,
+      'click .auth-form__submit': this.onSubmitClick,
+      'click .auth-card__link': this.goLogin,
     };
   }
+
+  private onSubmitClick = (event: Event): void => {
+    event.preventDefault();
+    event.stopPropagation();
+    this.onSubmit();
+  };
 
   private onEmailBlur = (): void => {
     showFieldError(
@@ -96,9 +102,7 @@ export class RegisterForm extends Block {
     showFieldError(this.refs.passwordRepeatError, passwordRepeatError);
   };
 
-  private onSubmit = (event: Event): void => {
-    event.preventDefault();
-
+  private onSubmit = (): void => {
     const email = this.inputValue('emailInput');
     const login = this.inputValue('loginInput');
     const name = this.inputValue('nameInput');
@@ -146,44 +150,15 @@ export class RegisterForm extends Block {
       return;
     }
 
-    console.log('RegisterForm submit:', {
-      email,
-      login,
-      name,
-      last_name: lastName,
-      phone,
-    });
-
     const user = this.buildUser();
     addUser(user);
     eventBus.emit('user:registered', user.id);
   };
 
-  private goLogin = (): void => {
+  private goLogin = (event: Event): void => {
+    event.preventDefault();
     eventBus.emit('nav:login');
   };
-
-  private inputValue(refName: string): string {
-    const inputElement = this.refs[refName];
-    if (!(inputElement instanceof HTMLInputElement)) return '';
-    return inputElement.value.trim();
-  }
-
-  private rawInputValue(refName: string): string {
-    const inputElement = this.refs[refName];
-    if (!(inputElement instanceof HTMLInputElement)) return '';
-    return inputElement.value;
-  }
-
-  private showGeneralError(message: string): void {
-    const generalErrorElement = this.refs.generalError;
-    if (!generalErrorElement) return;
-    generalErrorElement.textContent = message;
-    generalErrorElement.classList.toggle(
-      'auth-form__error--visible',
-      message !== '',
-    );
-  }
 
   private buildUser(): User {
     return {

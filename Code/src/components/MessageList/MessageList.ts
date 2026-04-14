@@ -34,7 +34,7 @@ export class MessageList extends Block {
     if (messages.length > 0) {
       const separator = document.createElement('span');
       separator.className = 'message-list__date';
-      separator.textContent = this.formatDate(messages[0]);
+      separator.textContent = this.formatDate();
       container.appendChild(separator);
     }
 
@@ -50,13 +50,7 @@ export class MessageList extends Block {
     container.scrollTop = container.scrollHeight;
   }
 
-  private formatDate(message: Message): string {
-    const date = (message as any).date;
-
-    if (date) {
-      return date;
-    }
-
+  private formatDate(): string {
     return 'Hoy';
   }
 }

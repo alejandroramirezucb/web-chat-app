@@ -1,5 +1,4 @@
 import { Block } from '../../core/Block';
-import { eventBus } from '../../core/EventBus';
 import { Chat } from '../../props/Chat';
 import { ChatItem } from '../ChatItem/ChatItem';
 import template from './ChatList.hbs?raw';
@@ -22,20 +21,10 @@ export class ChatList extends Block {
 
   protected onMount() {
     this.buildItems();
-    eventBus.on('chat:select', this.onChatSelect);
   }
 
-  private onChatSelect = (id: unknown) => {
-    if (typeof id !== 'number') {
-      return;
-    }
-
-    this.props.activeChatId = id;
-    this.buildItems();
-  };
-
   private buildItems() {
-    const container = this.element.querySelector('.chat-list');
+    const container = this.element;
     const { chats, activeChatId } = this.props;
 
     if (!container) {
@@ -43,7 +32,7 @@ export class ChatList extends Block {
     }
 
     container.innerHTML = '';
-    this.items.clear();
+    this.items = new Map();
 
     chats.forEach((chat) => {
       const item = new ChatItem({
@@ -56,8 +45,4 @@ export class ChatList extends Block {
     });
   }
 
-  remove() {
-    super.remove();
-    eventBus.off('chat:select', this.onChatSelect);
-  }
 }

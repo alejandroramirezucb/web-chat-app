@@ -3,10 +3,7 @@ import { Message } from '../../props/Message';
 import template from './MessageItem.hbs?raw';
 
 export class MessageItem extends Block {
-  declare message: Message;
-  declare isOwn: boolean;
-
-  constructor({ message, isOwn }) {
+  constructor({ message, isOwn }: { message: Message; isOwn: boolean }) {
     super({ message, isOwn });
   }
 

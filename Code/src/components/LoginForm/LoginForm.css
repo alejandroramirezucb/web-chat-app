@@ -71,6 +71,10 @@
   line-height: 1;
   cursor: pointer;
   text-decoration: none;
+  background: transparent;
+  border: 0;
+  width: 100%;
+  padding: 0;
 }
 
 .auth-card--login .auth-form__group {

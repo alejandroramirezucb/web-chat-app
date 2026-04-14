@@ -12,8 +12,7 @@ export class NotFoundPage extends Block {
     return {
       errorCard: new ErrorCard({
         code: '404',
-        title: 'No se encontró nada',
-        message: 'Lo sentimos, la página que buscas no existe.',
+        title: 'Nos equivocamos de lugar',
       }),
     };
   }

@@ -9,10 +9,11 @@ export class ChatSidebar extends Block {
   declare protected props: {
     chats: Chat[];
     allChats: Chat[];
+    activeChatId: number | null;
   };
 
-  constructor({ chats }: { chats: Chat[] }) {
-    super({ chats, allChats: chats });
+  constructor({ chats, activeChatId = null }: { chats: Chat[]; activeChatId?: number | null }) {
+    super({ chats, allChats: chats, activeChatId });
   }
 
   protected render() {
@@ -22,7 +23,7 @@ export class ChatSidebar extends Block {
   protected children(): Record<string, Block> {
     return {
       searchInput: new SearchInput(),
-      chatList: new ChatList({ chats: this.props.chats }),
+      chatList: new ChatList({ chats: this.props.chats, activeChatId: this.props.activeChatId }),
     };
   }
 

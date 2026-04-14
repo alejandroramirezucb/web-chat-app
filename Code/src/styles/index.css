@@ -18,6 +18,7 @@
 @import '../components/ProfileAvatar/ProfileAvatar.css';
 @import '../components/ProfileFields/ProfileFields.css';
 @import '../components/ErrorCard/ErrorCard.css';
+@import '../components/AvatarModal/AvatarModal.css';
 @import '../pages/ErrorPages/ErrorPage.css';
 @import '../pages/ErrorPages/NotFoundPage/NotFoundPage.css';
 @import '../pages/ErrorPages/ServerErrorPage/ServerErrorPage.css';

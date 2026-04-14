@@ -29,7 +29,10 @@ export class ChatPage extends Block {
     const { userChats, selectedChat, messages } = this.props;
 
     return {
-      chatSidebar: new ChatSidebar({ chats: userChats }),
+      chatSidebar: new ChatSidebar({
+        chats: userChats,
+        activeChatId: selectedChat?.id ?? null,
+      }),
       chatWindow: new ChatWindow({
         chat: selectedChat,
         messages,

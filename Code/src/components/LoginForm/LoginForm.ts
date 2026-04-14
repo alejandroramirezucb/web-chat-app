@@ -1,14 +1,10 @@
-import { Block } from '../../core/Block';
+import { AuthForm } from '../AuthForm/AuthForm';
 import { eventBus } from '../../core/EventBus';
 import { findUserByCredentials } from '../../props/User';
-import { validate, showFieldError } from '../../utils/validation';
+import { showFieldError } from '../../utils/validation';
 import template from './LoginForm.hbs?raw';
 
-interface LoginFormProps {}
-
-export class LoginForm extends Block {
-  declare protected props: LoginFormProps;
-
+export class LoginForm extends AuthForm {
   constructor() {
     super({});
   }
@@ -19,76 +15,59 @@ export class LoginForm extends Block {
 
   protected events(): Record<string, EventListener> {
     return {
-      'submit .auth-form': this.onSubmit,
-      'click .auth-card__link': this.goRegister,
       'blur #login': this.onLoginBlur,
       'blur #password': this.onPasswordBlur,
+      'click .auth-form__submit': this.onSubmitClick,
+      'click .auth-card__link': this.goRegister,
     };
   }
 
+  private onSubmitClick = (event: Event): void => {
+    event.preventDefault();
+    event.stopPropagation();
+    this.onSubmit();
+  };
+
   private onLoginBlur = (): void => {
+    const loginInputValue = this.inputValue('loginInput');
     showFieldError(
       this.refs.loginError,
-      validate('login', this.inputValue('loginInput')),
+      loginInputValue ? '' : 'El campo es requerido',
     );
   };
 
   private onPasswordBlur = (): void => {
+    const passwordInputValue = this.rawInputValue('passwordInput');
     showFieldError(
       this.refs.passwordError,
-      validate('password', this.rawInputValue('passwordInput')),
+      passwordInputValue ? '' : 'El campo es requerido',
     );
   };
 
-  private onSubmit = (event: Event): void => {
-    event.preventDefault();
-
+  private onSubmit = (): void => {
     const loginOrEmail = this.inputValue('loginInput');
     const password = this.rawInputValue('passwordInput');
 
-    const loginErr = validate('login', loginOrEmail);
-    const passwordErr = validate('password', password);
+    const loginErr = loginOrEmail ? '' : 'El campo es requerido';
+    const passwordErr = password ? '' : 'El campo es requerido';
 
     showFieldError(this.refs.loginError, loginErr);
     showFieldError(this.refs.passwordError, passwordErr);
 
     if (loginErr || passwordErr) return;
 
-    console.log('LoginForm submit:', { loginOrEmail, password });
-
     const user = findUserByCredentials(loginOrEmail, password);
 
     if (!user) {
-      this.showGeneralError('Login o email o contraseña incorrectos');
+      this.showGeneralError('Login o contraseña incorrectos');
       return;
     }
 
     eventBus.emit('user:logged-in', user.id);
   };
 
-  private goRegister = (): void => {
+  private goRegister = (event: Event): void => {
+    event.preventDefault();
     eventBus.emit('nav:register');
   };
-
-  private inputValue(refName: string): string {
-    const inputElement = this.refs[refName];
-    if (!(inputElement instanceof HTMLInputElement)) return '';
-    return inputElement.value.trim();
-  }
-
-  private rawInputValue(refName: string): string {
-    const inputElement = this.refs[refName];
-    if (!(inputElement instanceof HTMLInputElement)) return '';
-    return inputElement.value;
-  }
-
-  private showGeneralError(message: string): void {
-    const generalErrorElement = this.refs.generalError;
-    if (!generalErrorElement) return;
-    generalErrorElement.textContent = message;
-    generalErrorElement.classList.toggle(
-      'auth-form__error--visible',
-      message !== '',
-    );
-  }
 }

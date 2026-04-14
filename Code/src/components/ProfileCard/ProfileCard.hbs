@@ -1,12 +1,14 @@
 <section class='profile-card'>
-  <div ref='profileAvatar'></div>
+  <div ref='profileAvatar' class='profile-card__avatar-wrap'></div>
   <p class='profile-card__name'>{{name}}</p>
   <div ref='profileFields'></div>
   <div class='profile-card__actions'>
-    <a class='profile-card__action'>Cambiar datos</a>
-    <a class='profile-card__action'>Cambiar contrasena</a>
-    <a
+    <button class='profile-card__action' type='button'>Cambiar datos</button>
+    <button class='profile-card__action' type='button'>Cambiar contrasena</button>
+    <button
       class='profile-card__action profile-card__action--danger profile-card__action--logout'
-    >Salir</a>
+      type='button'
+    >Salir</button>
   </div>
+  <div ref='avatarModal'></div>
 </section>
