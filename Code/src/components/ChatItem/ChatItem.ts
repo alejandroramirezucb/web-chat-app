@@ -15,7 +15,7 @@ export class ChatItem extends Block {
     isOwnLastMessage: boolean;
   };
 
-  constructor({ chat, isActive = false }) {
+  constructor({ chat, isActive = false }: { chat: Chat; isActive?: boolean }) {
     super({
       chat,
       isActive,

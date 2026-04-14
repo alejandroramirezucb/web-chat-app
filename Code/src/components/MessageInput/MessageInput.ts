@@ -4,6 +4,8 @@ import { validate, showFieldError } from '../../utils/validation';
 import template from './MessageInput.hbs?raw';
 
 export class MessageInput extends Block {
+  declare protected props: Record<string, never>;
+
   protected render(): string {
     return template;
   }

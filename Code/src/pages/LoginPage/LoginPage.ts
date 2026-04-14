@@ -3,6 +3,8 @@ import { LoginForm } from '../../components/LoginForm/LoginForm';
 import template from './LoginPage.hbs?raw';
 
 export class LoginPage extends Block {
+  declare protected props: Record<string, never>;
+
   protected render() {
     return template;
   }

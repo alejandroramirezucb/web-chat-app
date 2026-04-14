@@ -22,6 +22,7 @@ interface RegisterFieldRefs {
 }
 
 export class RegisterForm extends AuthForm {
+  declare protected props: Record<string, never>;
   declare protected refs: Record<string, HTMLElement> & RegisterFieldRefs;
 
   constructor() {

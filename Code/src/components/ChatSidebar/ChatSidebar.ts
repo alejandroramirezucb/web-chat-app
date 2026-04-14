@@ -49,7 +49,7 @@ export class ChatSidebar extends Block {
       ? allChats.filter((_chat) => _chat.name.toLowerCase().includes(text))
       : allChats;
 
-    this.setProps({ chats: filtered });
+    this.props.chats = filtered;
   };
 
   remove() {

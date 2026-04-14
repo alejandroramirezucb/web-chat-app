@@ -6,46 +6,67 @@ export abstract class Block {
   protected props: any = {};
 
   constructor(props: any = {}) {
-    this.props = props;
+    this.props = this.makeProps(props);
     this.mount();
     this.onMount();
   }
 
-  public get element(): HTMLElement {
+  private makeProps(props: any) {
+    const self = this;
+
+    return new Proxy(props, {
+      set(target, prop, value) {
+        target[prop] = value;
+
+        if (props !== self.props) {
+          self.mount();
+        }
+
+        return true;
+      },
+    });
+  }
+
+  public setProps(newProps: any) {
+    if (!newProps) {
+      return;
+    }
+
+    Object.assign(this.props, newProps);
+  }
+
+  get element() {
+    if (!this._element) {
+      this.mount();
+    }
+
     return this._element;
   }
 
-  public setProps(newProps: any): void {
-    if (!newProps) return;
-    Object.assign(this.props, newProps);
-    this.mount();
-  }
+  private mount() {
+    const tempElement = document.createElement('template');
+    tempElement.innerHTML = Handlebars.compile(this.render())(this.props);
 
-  private mount(): void {
-    const templateElement = document.createElement('template');
-    templateElement.innerHTML = Handlebars.compile(this.render())(this.props);
+    const newElement = tempElement.content.firstElementChild as HTMLElement;
+    const refElements = newElement.querySelectorAll('[ref]');
 
-    const nextRootElement = templateElement.content.firstElementChild as HTMLElement;
-    const elementsWithRef = nextRootElement.querySelectorAll('[ref]');
-
-    elementsWithRef.forEach((refNode) => {
-      const refName = refNode.getAttribute('ref');
-      if (!refName) return;
-      this.refs[refName] = refNode as HTMLElement;
-      refNode.removeAttribute('ref');
+    refElements.forEach((ref) => {
+      const name = ref.getAttribute('ref');
+      this.refs[name] = ref as HTMLElement;
+      ref.removeAttribute('ref');
     });
 
     if (this._element) {
-      this.clearEvents();
-      this._element.replaceWith(nextRootElement);
+      this.clearEvents(this._element);
+      this._element.replaceWith(newElement);
     }
 
-    this._element = nextRootElement;
+    this._element = newElement;
     this.mountChildren();
     this.mountEvents();
   }
 
-  protected onMount(): void {}
+  protected onMount() {}
 
   protected children(): Record<string, Block> {
     return {};
@@ -55,62 +76,59 @@ export abstract class Block {
     return {};
   }
 
-  public remove(): void {
-    if (!this._element) return;
-    this.clearEvents();
+  remove() {
+    if (!this._element) {
+      return;
+    }
+
+    this.clearEvents(this._element);
     this._element.remove();
   }
 
-  private mountEvents(): void {
-    for (const [eventDescriptor, eventHandler] of Object.entries(this.events())) {
-      if (eventDescriptor.includes(' ')) {
-        const separatorIndex = eventDescriptor.indexOf(' ');
-        const eventName = eventDescriptor.substring(0, separatorIndex);
-        const selector = eventDescriptor.substring(separatorIndex + 1);
-        const matchingElements: Element[] = [];
+  private mountEvents() {
+    for (const [name, event] of Object.entries(this.events())) {
+      if (name.includes(' ')) {
+        const index = name.indexOf(' ');
+        const query = name.substring(index + 1);
+        const queryElement = this._element.querySelector(query);
 
-        if (this._element.matches(selector)) {
-          matchingElements.push(this._element);
+        if (!queryElement) {
+          continue;
         }
 
-        matchingElements.push(...Array.from(this._element.querySelectorAll(selector)));
-
-        matchingElements.forEach((targetElement) => {
-          targetElement.addEventListener(eventName, eventHandler);
-        });
+        queryElement.addEventListener(name.substring(0, index), event);
       } else {
-        this._element.addEventListener(eventDescriptor, eventHandler);
+        this._element.addEventListener(name, event);
       }
     }
   }
 
-  private mountChildren(): void {
+  private mountChildren() {
     for (const [name, child] of Object.entries(this.children())) {
-      const childContainer = this.refs[name];
-      if (!childContainer || !child) continue;
-      childContainer.replaceWith(child.element);
+      const refElement = this.refs[name];
+
+      if (!refElement || !child) {
+        continue;
+      }
+
+      refElement.replaceWith(child.element);
     }
   }
 
-  private clearEvents(): void {
-    for (const [eventDescriptor, eventHandler] of Object.entries(this.events())) {
-      if (eventDescriptor.includes(' ')) {
-        const separatorIndex = eventDescriptor.indexOf(' ');
-        const eventName = eventDescriptor.substring(0, separatorIndex);
-        const selector = eventDescriptor.substring(separatorIndex + 1);
-        const matchingElements: Element[] = [];
+  private clearEvents(_element: HTMLElement) {
+    for (const [name, event] of Object.entries(this.events())) {
+      if (name.includes(' ')) {
+        const index = name.indexOf(' ');
+        const query = name.substring(index + 1);
+        const queryElement = _element.querySelector(query);
 
-        if (this._element.matches(selector)) {
-          matchingElements.push(this._element);
+        if (!queryElement) {
+          continue;
         }
 
-        matchingElements.push(...Array.from(this._element.querySelectorAll(selector)));
-
-        matchingElements.forEach((targetElement) => {
-          targetElement.removeEventListener(eventName, eventHandler);
-        });
+        queryElement.removeEventListener(name.substring(0, index), event);
       } else {
-        this._element.removeEventListener(eventDescriptor, eventHandler);
+        _element.removeEventListener(name, event);
       }
     }
   }

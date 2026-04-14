@@ -11,7 +11,13 @@ export class ChatList extends Block {
 
   private items: Map<number, ChatItem> = new Map();
 
-  constructor({ chats, activeChatId = null }) {
+  constructor({
+    chats,
+    activeChatId = null,
+  }: {
+    chats: Chat[];
+    activeChatId?: number | null;
+  }) {
     super({ chats, activeChatId });
   }
 
@@ -31,8 +37,10 @@ export class ChatList extends Block {
       return;
     }
 
-    container.innerHTML = '';
-    this.items = new Map();
+    this.items.forEach((item) => {
+      item.remove();
+    });
+    this.items.clear();
 
     chats.forEach((chat) => {
       const item = new ChatItem({
@@ -45,4 +53,11 @@ export class ChatList extends Block {
     });
   }
 
+  remove() {
+    this.items.forEach((item) => {
+      item.remove();
+    });
+    this.items.clear();
+    super.remove();
+  }
 }

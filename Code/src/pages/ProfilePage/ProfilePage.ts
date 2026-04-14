@@ -13,7 +13,7 @@ export class ProfilePage extends Block {
     super({ user });
   }
 
-  protected children() {
+  protected children(): Record<string, Block> {
     return {
       profileCard: new ProfileCard(this.props.user),
     };

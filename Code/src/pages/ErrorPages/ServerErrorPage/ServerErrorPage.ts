@@ -4,6 +4,8 @@ import { ErrorCard } from '../../../components/ErrorCard/ErrorCard';
 import template from './ServerErrorPage.hbs?raw';
 
 export class ServerErrorPage extends Block {
+  declare protected props: Record<string, never>;
+
   protected render(): string {
     return template;
   }

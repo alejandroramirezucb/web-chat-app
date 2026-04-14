@@ -9,6 +9,8 @@ export class MessageList extends Block {
     messages: Message[];
   };
 
+  private items: MessageItem[] = [];
+
   constructor({ messages = [] }: { messages?: Message[] } = {}) {
     super({ messages });
   }
@@ -29,6 +31,11 @@ export class MessageList extends Block {
       return;
     }
 
+    this.items.forEach((item) => {
+      item.remove();
+    });
+    this.items = [];
+
     container.innerHTML = '';
 
     if (messages.length > 0) {
@@ -44,6 +51,7 @@ export class MessageList extends Block {
         isOwn: _message.senderId === CURRENT_USER_ID,
       });
 
+      this.items.push(message);
       container.appendChild(message.element);
     });
 
@@ -52,5 +60,13 @@ export class MessageList extends Block {
 
   private formatDate(): string {
     return 'Hoy';
+  }
+
+  remove() {
+    this.items.forEach((item) => {
+      item.remove();
+    });
+    this.items = [];
+    super.remove();
   }
 }

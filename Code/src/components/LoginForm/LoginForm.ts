@@ -5,6 +5,8 @@ import { showFieldError } from '../../utils/validation';
 import template from './LoginForm.hbs?raw';
 
 export class LoginForm extends AuthForm {
+  declare protected props: Record<string, never>;
+
   constructor() {
     super({});
   }
