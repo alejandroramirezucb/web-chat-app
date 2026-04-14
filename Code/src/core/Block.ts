@@ -2,73 +2,41 @@ import Handlebars from 'handlebars';
 
 export abstract class Block {
   private _element: HTMLElement;
-  private mountedEvents: Array<{
-    element: Element;
-    eventName: string;
-    handler: EventListener;
-  }> = [];
   protected refs: Record<string, HTMLElement> = {};
   protected props: any = {};
 
   constructor(props: any = {}) {
-    this.props = this.makeProps(props);
+    this.props = props;
     this.mount();
     this.onMount();
   }
 
-  private makeProps(props: any) {
-    const self = this;
-
-    return new Proxy(props, {
-      set(target, prop, value) {
-        target[prop] = value;
-
-        if (props !== self.props) {
-          self.mount();
-        }
-
-        return true;
-      },
-    });
-  }
-
-  public setProps(newProps: any) {
-    if (!newProps) {
-      return;
-    }
-
-    Object.assign(this.props, newProps);
-  }
-
-  get element() {
-    if (!this._element) {
-      this.mount();
-    }
-
+  public get element(): HTMLElement {
     return this._element;
   }
 
-  private mount() {
+  public setProps(newProps: any): void {
+    if (!newProps) return;
+    Object.assign(this.props, newProps);
+    this.mount();
+  }
+
+  private mount(): void {
     const templateElement = document.createElement('template');
     templateElement.innerHTML = Handlebars.compile(this.render())(this.props);
 
-    const nextRootElement = templateElement.content
-      .firstElementChild as HTMLElement;
+    const nextRootElement = templateElement.content.firstElementChild as HTMLElement;
     const elementsWithRef = nextRootElement.querySelectorAll('[ref]');
 
     elementsWithRef.forEach((refNode) => {
       const refName = refNode.getAttribute('ref');
-
-      if (!refName) {
-        return;
-      }
-
+      if (!refName) return;
       this.refs[refName] = refNode as HTMLElement;
       refNode.removeAttribute('ref');
     });
 
     if (this._element) {
-      this.clearEvents(this._element);
+      this.clearEvents();
       this._element.replaceWith(nextRootElement);
     }
 
@@ -77,7 +45,7 @@ export abstract class Block {
     this.mountEvents();
   }
 
-  protected onMount() {}
+  protected onMount(): void {}
 
   protected children(): Record<string, Block> {
     return {};
@@ -87,19 +55,14 @@ export abstract class Block {
     return {};
   }
 
-  remove() {
-    if (!this._element) {
-      return;
-    }
-
-    this.clearEvents(this._element);
+  public remove(): void {
+    if (!this._element) return;
+    this.clearEvents();
     this._element.remove();
   }
 
-  private mountEvents() {
-    for (const [eventDescriptor, eventHandler] of Object.entries(
-      this.events(),
-    )) {
+  private mountEvents(): void {
+    for (const [eventDescriptor, eventHandler] of Object.entries(this.events())) {
       if (eventDescriptor.includes(' ')) {
         const separatorIndex = eventDescriptor.indexOf(' ');
         const eventName = eventDescriptor.substring(0, separatorIndex);
@@ -110,56 +73,46 @@ export abstract class Block {
           matchingElements.push(this._element);
         }
 
-        matchingElements.push(
-          ...Array.from(this._element.querySelectorAll(selector)),
-        );
+        matchingElements.push(...Array.from(this._element.querySelectorAll(selector)));
 
-        if (matchingElements.length === 0) {
-          continue;
-        }
-
-        for (const targetElement of matchingElements) {
+        matchingElements.forEach((targetElement) => {
           targetElement.addEventListener(eventName, eventHandler);
-          this.mountedEvents.push({
-            element: targetElement,
-            eventName,
-            handler: eventHandler,
-          });
-        }
+        });
       } else {
         this._element.addEventListener(eventDescriptor, eventHandler);
-        this.mountedEvents.push({
-          element: this._element,
-          eventName: eventDescriptor,
-          handler: eventHandler,
-        });
       }
     }
   }
 
-  private mountChildren() {
+  private mountChildren(): void {
     for (const [name, child] of Object.entries(this.children())) {
       const childContainer = this.refs[name];
-
-      if (!childContainer || !child) {
-        continue;
-      }
-
+      if (!childContainer || !child) continue;
       childContainer.replaceWith(child.element);
     }
   }
 
-  private clearEvents(mountedElement: HTMLElement) {
-    for (const { element, eventName, handler } of this.mountedEvents) {
-      if (element === mountedElement || mountedElement.contains(element)) {
-        element.removeEventListener(eventName, handler);
+  private clearEvents(): void {
+    for (const [eventDescriptor, eventHandler] of Object.entries(this.events())) {
+      if (eventDescriptor.includes(' ')) {
+        const separatorIndex = eventDescriptor.indexOf(' ');
+        const eventName = eventDescriptor.substring(0, separatorIndex);
+        const selector = eventDescriptor.substring(separatorIndex + 1);
+        const matchingElements: Element[] = [];
+
+        if (this._element.matches(selector)) {
+          matchingElements.push(this._element);
+        }
+
+        matchingElements.push(...Array.from(this._element.querySelectorAll(selector)));
+
+        matchingElements.forEach((targetElement) => {
+          targetElement.removeEventListener(eventName, eventHandler);
+        });
+      } else {
+        this._element.removeEventListener(eventDescriptor, eventHandler);
       }
     }
-
-    this.mountedEvents = this.mountedEvents.filter(
-      ({ element }) =>
-        element !== mountedElement && !mountedElement.contains(element),
-    );
   }
 
   protected abstract render(): string;

@@ -56,8 +56,10 @@ export class ChatPage extends Block {
       return;
     }
 
-    this.props.selectedChat = selected;
-    this.props.messages = messagesByChatId[chatId] || [];
+    this.setProps({
+      selectedChat: selected,
+      messages: messagesByChatId[chatId] || [],
+    });
   };
 
   remove() {
