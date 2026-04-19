@@ -20,6 +20,8 @@
 @import '../components/ProfileFields/ProfileFields.css';
 @import '../components/ErrorCard/ErrorCard.css';
 @import '../components/AvatarModal/AvatarModal.css';
+@import '../components/DeleteChatModal/DeleteChatModal.css';
+@import '../components/PasswordChangeForm/PasswordChangeForm.css';
 @import '../pages/ErrorPages/ErrorPage.css';
 @import '../pages/ErrorPages/NotFoundPage/NotFoundPage.css';
 @import '../pages/ErrorPages/ServerErrorPage/ServerErrorPage.css';

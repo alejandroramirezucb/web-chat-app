@@ -26,6 +26,10 @@
   user-select: none;
 }
 
+.chat-sidebar__profile-link:hover {
+  color: #3369f3;
+}
+
 @media (width <= 1024px) {
   .chat-sidebar {
     width: 280px;
@@ -37,5 +41,14 @@
     width: 220px;
     border-right: 1px solid #eaeaea;
     border-bottom: 0;
+  }
+}
+
+@media (width <= 640px) {
+  .chat-sidebar {
+    width: 100%;
+    border-right: 0;
+    height: 100vh;
+    overflow: hidden;
   }
 }

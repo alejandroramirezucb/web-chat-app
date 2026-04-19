@@ -1,5 +1,6 @@
 /* stylelint-disable selector-class-pattern */
 .chat-header {
+  position: relative;
   height: 54px;
   background: var(--color-panel);
   padding: 10px 18px;
@@ -9,6 +10,26 @@
   gap: 10px;
   align-items: center;
   font-family: Inter, sans-serif;
+}
+
+.chat-header__back {
+  display: none;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.chat-header__back-icon {
+  width: 14px;
+  height: 14px;
+  filter: brightness(0) invert(0);
+  transform: rotate(180deg);
 }
 
 .chat-header__avatar {
@@ -38,6 +59,13 @@
   font-size: 13px;
   font-weight: 600;
   line-height: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chat-header__menu-wrap {
+  position: relative;
 }
 
 .chat-header__menu {
@@ -55,9 +83,53 @@
   justify-content: center;
 }
 
+.chat-header__menu:hover {
+  opacity: 0.7;
+}
+
 .chat-header__menu-icon {
   width: 18px;
   height: 18px;
+}
+
+.chat-header__dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: 165px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 12%);
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 50;
+}
+
+.chat-header__dropdown--open {
+  display: flex;
+}
+
+.chat-header__dropdown-item {
+  width: 100%;
+  padding: 12px 16px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  color: #1e1e1e;
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.chat-header__dropdown-item:hover {
+  background: #f8f8f8;
+}
+
+.chat-header__dropdown-item--danger {
+  color: #ff2f2f;
 }
 
 @media (width <= 767px) {
@@ -65,8 +137,14 @@
     padding: 8px 12px;
     gap: 8px;
   }
+}
 
-  .chat-header__menu {
-    font-size: 16px;
+@media (width <= 640px) {
+  .chat-header {
+    grid-template-columns: 28px 34px 1fr auto;
+  }
+
+  .chat-header__back {
+    display: flex;
   }
 }

@@ -38,6 +38,10 @@
   text-decoration: none;
 }
 
+.profile-card__action:hover {
+  opacity: 0.8;
+}
+
 .profile-card__action--danger {
   color: #ff2f2f;
 }

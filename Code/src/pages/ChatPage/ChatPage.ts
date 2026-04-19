@@ -11,6 +11,7 @@ export class ChatPage extends Block {
     userChats: Chat[];
     selectedChat: Chat | null;
     messages: Message[];
+    mobileView: 'sidebar' | 'chat';
   };
 
   constructor(userId: number) {
@@ -18,6 +19,7 @@ export class ChatPage extends Block {
       userChats: getChatsByUserId(userId),
       selectedChat: null,
       messages: [],
+      mobileView: 'sidebar',
     });
   }
 
@@ -42,6 +44,7 @@ export class ChatPage extends Block {
 
   protected onMount() {
     eventBus.on('chat:select', this.onChatSelect);
+    eventBus.on('mobile:back', this.onMobileBack);
   }
 
   private onChatSelect = (chatId: unknown) => {
@@ -58,10 +61,16 @@ export class ChatPage extends Block {
 
     this.props.selectedChat = selected;
     this.props.messages = messagesByChatId[chatId] || [];
+    this.props.mobileView = 'chat';
+  };
+
+  private onMobileBack = () => {
+    this.props.mobileView = 'sidebar';
   };
 
   remove() {
     super.remove();
     eventBus.off('chat:select', this.onChatSelect);
+    eventBus.off('mobile:back', this.onMobileBack);
   }
 }

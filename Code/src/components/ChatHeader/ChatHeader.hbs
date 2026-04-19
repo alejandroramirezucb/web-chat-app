@@ -1,17 +1,23 @@
 <header class='chat-header'>
+  <button type='button' class='chat-header__back' aria-label='Volver'>
+    <img src='/Arrow.svg' alt='' class='chat-header__back-icon' />
+  </button>
   <div class='chat-header__avatar'>
     {{#if chat.avatar}}
       <img src='{{chat.avatar}}' alt='{{chat.name}}' />
     {{else}}
-      <span class='chat-header__avatar-placeholder'>{{firstLetter
-          chat.name
-        }}</span>
+      <span class='chat-header__avatar-placeholder'>{{firstLetter chat.name}}</span>
     {{/if}}
   </div>
   <span class='chat-header__name'>{{chat.name}}</span>
-  <button type='button' class='chat-header__menu' aria-label='Opciones'><img
-      src='/Options.svg'
-      alt='Opciones'
-      class='chat-header__menu-icon'
-    /></button>
+  <div class='chat-header__menu-wrap'>
+    <button type='button' class='chat-header__menu' aria-label='Opciones'>
+      <img src='/Options.svg' alt='Opciones' class='chat-header__menu-icon' />
+    </button>
+    <div class='chat-header__dropdown'>
+      <button type='button' class='chat-header__dropdown-item' data-action='add-member'>Agregar miembro</button>
+      <button type='button' class='chat-header__dropdown-item chat-header__dropdown-item--danger' data-action='delete-chat'>Eliminar chat</button>
+    </div>
+  </div>
+  <div ref='deleteChatModal'></div>
 </header>

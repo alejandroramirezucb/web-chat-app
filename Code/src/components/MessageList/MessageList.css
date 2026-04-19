@@ -16,3 +16,9 @@
   line-height: 1;
   margin: 8px 0 12px;
 }
+
+@media (width <= 640px) {
+  .message-list {
+    padding: 12px;
+  }
+}

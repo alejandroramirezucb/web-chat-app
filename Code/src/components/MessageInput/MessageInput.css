@@ -64,6 +64,22 @@
   cursor: pointer;
 }
 
+.message-input__send:hover {
+  opacity: 0.85;
+}
+
+.message-input__send:active {
+  transform: scale(0.95);
+}
+
+.message-input__attach:hover {
+  opacity: 0.7;
+}
+
+.message-input__field:focus {
+  background: #e8e8e8;
+}
+
 .message-input__send-icon {
   width: 14px;
   height: 14px;

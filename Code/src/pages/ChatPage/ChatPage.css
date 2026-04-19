@@ -10,8 +10,6 @@
 
 @media (width <= 1024px) {
   .chat-page {
-    width: 100%;
-    min-height: 100vh;
     grid-template-columns: 280px 1fr;
   }
 }
@@ -25,5 +23,32 @@
   .chat-page > :first-child,
   .chat-page > :last-child {
     min-width: 0;
+  }
+}
+
+@media (width <= 640px) {
+  .chat-page {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .chat-page--sidebar-open .chat-sidebar {
+    display: flex;
+    width: 100%;
+  }
+
+  .chat-page--sidebar-open .chat-window {
+    display: none;
+  }
+
+  .chat-page--chat-open .chat-sidebar {
+    display: none;
+  }
+
+  .chat-page--chat-open .chat-window {
+    display: grid;
+    width: 100%;
   }
 }

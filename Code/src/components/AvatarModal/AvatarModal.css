@@ -84,6 +84,14 @@
   cursor: pointer;
 }
 
+.avatar-modal__submit:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.avatar-modal__submit:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
 .avatar-modal__submit:disabled {
   opacity: 0.5;
   cursor: default;
