@@ -1,5 +1,6 @@
 /* stylelint-disable selector-class-pattern */
 .profile-avatar {
+  position: relative;
   width: 130px;
   height: 130px;
   border-radius: 50%;
@@ -22,4 +23,43 @@
   font-size: 40px;
   font-weight: 600;
   line-height: 1;
+}
+
+.profile-avatar__overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.profile-avatar:hover .profile-avatar__overlay {
+  opacity: 1;
+}
+
+.profile-avatar__overlay-icon {
+  width: 28px;
+  height: 28px;
+  filter: brightness(0) invert(1);
+}
+
+@media (width <= 640px) {
+  .profile-avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .profile-avatar__placeholder {
+    font-size: 32px;
+  }
+
+  .profile-avatar__overlay-icon {
+    width: 22px;
+    height: 22px;
+  }
 }

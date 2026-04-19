@@ -2,7 +2,7 @@
 .chat-sidebar {
   width: 310px;
   height: 100%;
-  background: #fff;
+  background: #fbfbfb;
   border-right: 1px solid #eaeaea;
   display: flex;
   flex-direction: column;
@@ -50,5 +50,13 @@
     border-right: 0;
     height: 100vh;
     overflow: hidden;
+  }
+
+  .chat-sidebar__header {
+    padding: 14px 10px 0;
+  }
+
+  .chat-sidebar__profile-link {
+    font-size: 11px;
   }
 }

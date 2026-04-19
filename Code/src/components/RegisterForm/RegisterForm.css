@@ -116,6 +116,21 @@
   display: block;
 }
 
+.auth-card--register .auth-form__submit:focus {
+  outline: 2px solid #fff;
+  outline-offset: -3px;
+}
+
+.auth-card--register .auth-form__input:focus {
+  border-bottom-color: #5d8df5;
+}
+
+.auth-card--register .auth-card__link:focus {
+  outline: 2px solid #3369f3;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 @media (width <= 767px) {
   .auth-card--register {
     width: min(100%, 340px);
@@ -125,5 +140,14 @@
 
   .auth-card--register .auth-card__title {
     margin-bottom: 30px;
+  }
+}
+
+@media (width <= 400px) {
+  .auth-card--register {
+    width: 100%;
+    padding: 32px 16px 24px;
+    border-radius: 0;
+    box-shadow: none;
   }
 }

@@ -27,9 +27,12 @@
 
 .message__image-wrapper {
   margin-top: 6px;
+  max-width: 316px;
 }
 
 .message__image {
+  display: block;
+  width: 100%;
   max-width: 316px;
   border: 1px solid #eaeaea;
   border-radius: 12px;
@@ -69,7 +72,23 @@
     max-width: 88%;
   }
 
+  .message__image-wrapper {
+    max-width: 280px;
+  }
+
   .message__image {
-    max-width: min(100%, 280px);
+    max-width: 280px;
+  }
+}
+
+@media (width <= 640px) {
+  .message {
+    padding: 8px 10px 6px;
+    border-radius: 10px;
+  }
+
+  .message__text {
+    font-size: 12px;
+    line-height: 16px;
   }
 }

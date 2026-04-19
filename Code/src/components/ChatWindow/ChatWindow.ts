@@ -43,29 +43,40 @@ export class ChatWindow extends Block {
     eventBus.on('message:send', this.onMessageSend);
   }
 
-  private onMessageSend = (text: unknown) => {
+  private onMessageSend = (payload: unknown) => {
     const { chat, messages } = this.props;
+    if (!chat) return;
 
-    if (!chat || !String(text).trim()) {
-      return;
+    const time = new Date().toLocaleTimeString('es-BO', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    let newMessage: Message | null = null;
+
+    if (typeof payload === 'string' && payload.trim()) {
+      newMessage = {
+        id: Date.now(),
+        chatId: chat.id,
+        senderId: CURRENT_USER_ID,
+        text: payload,
+        time,
+      };
+    } else if (payload !== null && typeof payload === 'object' && 'image' in payload) {
+      newMessage = {
+        id: Date.now(),
+        chatId: chat.id,
+        senderId: CURRENT_USER_ID,
+        text: '',
+        image: (payload as { image: string }).image,
+        time,
+      };
     }
 
-    const newMessage = this.buildMessage(text, chat);
-    this.props.messages = [...messages, newMessage];
+    if (newMessage) {
+      this.props.messages = [...messages, newMessage];
+    }
   };
-
-  private buildMessage(text: unknown, chat: Chat): Message {
-    return {
-      id: Date.now(),
-      chatId: chat.id,
-      senderId: CURRENT_USER_ID,
-      text: String(text),
-      time: new Date().toLocaleTimeString('es-BO', {
-        hour: '2-digit',
-        minute: '2-digit',
-      }),
-    };
-  }
 
   remove() {
     super.remove();

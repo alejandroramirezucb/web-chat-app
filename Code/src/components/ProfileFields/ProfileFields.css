@@ -26,3 +26,30 @@
   font-weight: 500;
   line-height: 1;
 }
+
+@media (width <= 767px) {
+  .profile-fields__item {
+    gap: 4px;
+  }
+
+  .profile-fields__label {
+    font-size: 11px;
+  }
+
+  .profile-fields__value {
+    font-size: 12px;
+  }
+}
+
+@media (width <= 640px) {
+  .profile-fields__item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 8px 0;
+  }
+
+  .profile-fields__value {
+    font-weight: 500;
+  }
+}

@@ -20,6 +20,8 @@ export class AvatarModal extends Block {
     return {
       'click .avatar-modal__overlay': this.close,
       'click .avatar-modal__submit': this.onSubmit,
+      'click .avatar-modal__preview': this.onPreviewClick,
+      'change .avatar-modal__file-input': this.onFileChange,
     };
   }
 
@@ -28,10 +30,11 @@ export class AvatarModal extends Block {
     this.element.setAttribute('aria-hidden', 'false');
 
     const input = this.refs.fileInput;
-
     if (input instanceof HTMLInputElement) {
       input.value = '';
     }
+
+    this.resetPreview();
   }
 
   close = (): void => {
@@ -39,28 +42,67 @@ export class AvatarModal extends Block {
     this.element.setAttribute('aria-hidden', 'true');
   };
 
-  private onSubmit = (): void => {
-    const input = this.refs.fileInput;
+  private resetPreview(): void {
+    const preview = this.refs.previewImg;
+    const label = this.refs.fileLabel;
 
-    if (!(input instanceof HTMLInputElement)) {
-      return;
+    if (preview instanceof HTMLImageElement) {
+      preview.src = '';
+      preview.style.display = 'none';
     }
+
+    if (label instanceof HTMLElement) {
+      label.style.display = '';
+    }
+  }
+
+  private onPreviewClick = (): void => {
+    const input = this.refs.fileInput;
+    if (input instanceof HTMLInputElement) {
+      input.value = '';
+      input.click();
+    }
+  };
+
+  private onFileChange = (): void => {
+    const input = this.refs.fileInput;
+    if (!(input instanceof HTMLInputElement)) return;
 
     const file = input.files?.[0];
-
-    if (!file) {
-      return;
-    }
+    if (!file) return;
 
     const reader = new FileReader();
-
     reader.onload = (event: ProgressEvent<FileReader>) => {
       const result = event.target?.result;
+      if (typeof result !== 'string') return;
 
-      if (typeof result !== 'string') {
-        return;
+      const preview = this.refs.previewImg;
+      const label = this.refs.fileLabel;
+
+      if (preview instanceof HTMLImageElement) {
+        preview.src = result;
+        preview.style.display = 'block';
       }
 
+      if (label instanceof HTMLElement) {
+        label.style.display = 'none';
+      }
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  private onSubmit = (): void => {
+    const input = this.refs.fileInput;
+    if (!(input instanceof HTMLInputElement)) return;
+
+    const file = input.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event: ProgressEvent<FileReader>) => {
+      const result = event.target?.result;
+      if (typeof result !== 'string') return;
       this.props.onAvatarSelected(result);
       this.close();
     };

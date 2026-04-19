@@ -1,6 +1,6 @@
 import { Block } from '../../core/Block';
 import { eventBus } from '../../core/EventBus';
-import { Chat, getChatsByUserId } from '../../props/Chat';
+import { Chat, getChatsByUserId, removeChatById } from '../../props/Chat';
 import { Message, messagesByChatId } from '../../props/Message';
 import { ChatSidebar } from '../../components/ChatSidebar/ChatSidebar';
 import { ChatWindow } from '../../components/ChatWindow/ChatWindow';
@@ -45,6 +45,7 @@ export class ChatPage extends Block {
   protected onMount() {
     eventBus.on('chat:select', this.onChatSelect);
     eventBus.on('mobile:back', this.onMobileBack);
+    eventBus.on('chat:delete', this.onChatDelete);
   }
 
   private onChatSelect = (chatId: unknown) => {
@@ -68,9 +69,21 @@ export class ChatPage extends Block {
     this.props.mobileView = 'sidebar';
   };
 
+  private onChatDelete = () => {
+    const { selectedChat, userChats } = this.props;
+    if (!selectedChat) return;
+    removeChatById(selectedChat.id);
+    const remaining = userChats.filter((c) => c.id !== selectedChat.id);
+    this.props.selectedChat = null;
+    this.props.messages = [];
+    this.props.mobileView = 'sidebar';
+    this.props.userChats = remaining;
+  };
+
   remove() {
     super.remove();
     eventBus.off('chat:select', this.onChatSelect);
     eventBus.off('mobile:back', this.onMobileBack);
+    eventBus.off('chat:delete', this.onChatDelete);
   }
 }

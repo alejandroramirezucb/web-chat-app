@@ -34,3 +34,20 @@
     padding-bottom: 10px;
   }
 }
+
+@media (width <= 640px) {
+  .search-input {
+    padding: 6px 8px 10px;
+  }
+
+  .search-input::before {
+    left: 20px;
+    top: 15px;
+  }
+
+  .search-input__field {
+    font-size: 12px;
+    text-align: left;
+    padding-left: 26px;
+  }
+}

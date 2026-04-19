@@ -105,3 +105,13 @@
 .delete-chat-modal__cancel:hover {
   opacity: 0.7;
 }
+
+.delete-chat-modal__confirm:focus {
+  outline: 2px solid #ff2f2f;
+  outline-offset: 2px;
+}
+
+.delete-chat-modal__cancel:focus {
+  outline: 2px solid #eaeaea;
+  outline-offset: 2px;
+}

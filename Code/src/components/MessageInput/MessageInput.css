@@ -1,5 +1,6 @@
 /* stylelint-disable selector-class-pattern */
 .message-input-wrapper {
+  position: relative;
   border-top: 1px solid #eaeaea;
   padding: 10px 20px 12px;
   background: #fff;
@@ -27,6 +28,60 @@
 .message-input__attach-icon {
   width: 18px;
   height: 18px;
+}
+
+.message-input__photo-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.message-input__attach-menu {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 20px;
+  width: 162px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 14%);
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 50;
+}
+
+.message-input__attach-menu--open {
+  display: flex;
+}
+
+.message-input__attach-option {
+  width: 100%;
+  padding: 12px 16px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  color: #1e1e1e;
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.message-input__attach-option:hover {
+  background: #f8f8f8;
+}
+
+.message-input__attach-option-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 .message-input__field {
@@ -105,6 +160,22 @@
   pointer-events: none;
 }
 
+.message-input__send:focus {
+  outline: 2px solid #fff;
+  outline-offset: -2px;
+}
+
+.message-input__attach:focus {
+  outline: 2px solid #3369f3;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.message-input__attach-option:focus {
+  outline: 2px solid #3369f3;
+  outline-offset: -2px;
+}
+
 @media (width <= 767px) {
   .message-input-wrapper {
     padding: 8px 12px 10px;
@@ -112,5 +183,20 @@
 
   .message-input {
     gap: 8px;
+  }
+}
+
+@media (width <= 400px) {
+  .message-input-wrapper {
+    padding: 6px 8px 8px;
+  }
+
+  .message-input {
+    gap: 6px;
+  }
+
+  .message-input__field {
+    font-size: 12px;
+    padding: 0 12px;
   }
 }

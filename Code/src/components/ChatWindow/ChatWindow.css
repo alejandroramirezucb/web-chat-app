@@ -43,3 +43,9 @@
     font-size: 16px;
   }
 }
+
+@media (width <= 640px) {
+  .chat-window--empty {
+    display: none;
+  }
+}

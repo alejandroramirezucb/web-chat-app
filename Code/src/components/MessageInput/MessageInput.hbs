@@ -1,4 +1,19 @@
 <div class="message-input-wrapper">
+  <input ref="photoInput" type="file" accept="image/*,video/*" class="message-input__photo-input" />
+  <div class="message-input__attach-menu">
+    <button type="button" class="message-input__attach-option" data-attach="photo">
+      <img src="/Photo.svg" alt="" class="message-input__attach-option-icon" />
+      Foto o Video
+    </button>
+    <button type="button" class="message-input__attach-option" data-attach="file">
+      <img src="/File.svg" alt="" class="message-input__attach-option-icon" />
+      Archivo
+    </button>
+    <button type="button" class="message-input__attach-option" data-attach="location">
+      <img src="/Location.svg" alt="" class="message-input__attach-option-icon" />
+      Localización
+    </button>
+  </div>
   <form class="message-input" autocomplete="off">
     <button type="button" class="message-input__attach" aria-label="Adjuntar archivo">
       <img src="/Clip.svg" alt="Adjuntar" class="message-input__attach-icon" />

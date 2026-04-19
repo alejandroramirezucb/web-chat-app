@@ -35,6 +35,10 @@ export class ChatHeader extends Block {
     };
   }
 
+  protected onMount(): void {
+    document.addEventListener('click', this.onDocumentClick);
+  }
+
   protected onRender(): void {
     this.applyDropdownState();
   }
@@ -43,9 +47,17 @@ export class ChatHeader extends Block {
     eventBus.emit('mobile:back');
   };
 
-  private onMenuClick = (): void => {
+  private onMenuClick = (event: Event): void => {
+    event.stopPropagation();
     this.dropdownOpen = !this.dropdownOpen;
     this.applyDropdownState();
+  };
+
+  private onDocumentClick = (): void => {
+    if (this.dropdownOpen) {
+      this.dropdownOpen = false;
+      this.applyDropdownState();
+    }
   };
 
   private onAddMember = (): void => {
@@ -64,5 +76,10 @@ export class ChatHeader extends Block {
     if (dropdown) {
       dropdown.classList.toggle('chat-header__dropdown--open', this.dropdownOpen);
     }
+  }
+
+  remove(): void {
+    document.removeEventListener('click', this.onDocumentClick);
+    super.remove();
   }
 }

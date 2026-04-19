@@ -10,3 +10,12 @@
     height: calc(100% - 96px);
   }
 }
+
+@media (width <= 640px) {
+  .chat-list {
+    height: auto;
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}

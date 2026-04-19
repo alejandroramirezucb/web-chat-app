@@ -116,6 +116,21 @@
   display: block;
 }
 
+.auth-card--login .auth-form__submit:focus {
+  outline: 2px solid #fff;
+  outline-offset: -3px;
+}
+
+.auth-card--login .auth-form__input:focus {
+  border-bottom-color: #5d8df5;
+}
+
+.auth-card--login .auth-card__link:focus {
+  outline: 2px solid #3369f3;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 @media (width <= 767px) {
   .auth-card--login {
     width: min(100%, 340px);
@@ -129,5 +144,14 @@
 
   .auth-card--login .auth-form__submit {
     margin-top: 16px;
+  }
+}
+
+@media (width <= 400px) {
+  .auth-card--login {
+    width: 100%;
+    padding: 32px 16px 24px;
+    border-radius: 0;
+    box-shadow: none;
   }
 }

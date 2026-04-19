@@ -104,3 +104,37 @@
 .profile-edit-form__cancel:hover {
   opacity: 0.7;
 }
+
+.profile-edit-form__input:focus {
+  border-bottom: 1px solid #3369f3;
+}
+
+.profile-edit-form__save:focus {
+  outline: 2px solid #3369f3;
+  outline-offset: 2px;
+}
+
+.profile-edit-form__cancel:focus {
+  outline: 2px solid #eaeaea;
+  outline-offset: 2px;
+}
+
+.profile-edit-form__cancel:active {
+  opacity: 0.5;
+}
+
+@media (width <= 640px) {
+  .profile-edit-form__label {
+    font-size: 9px;
+  }
+
+  .profile-edit-form__input {
+    font-size: 12px;
+  }
+
+  .profile-edit-form__save,
+  .profile-edit-form__cancel {
+    height: 34px;
+    font-size: 12px;
+  }
+}
